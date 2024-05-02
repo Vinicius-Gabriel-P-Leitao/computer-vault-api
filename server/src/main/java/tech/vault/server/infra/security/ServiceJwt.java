@@ -1,4 +1,4 @@
-package tech.vault.server.core.security;
+package tech.vault.server.infra.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,8 +1,8 @@
-package tech.vault.server.config;
+package tech.vault.server.infra.config;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import tech.vault.server.database.entity.User;
+import tech.vault.server.domain.entity.User;
 
 import java.util.Collection;
 import java.util.List;

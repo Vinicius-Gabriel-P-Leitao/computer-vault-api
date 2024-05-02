@@ -1,4 +1,4 @@
-package tech.vault.server.database.entity.values;
+package tech.vault.server.domain.entity.values;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

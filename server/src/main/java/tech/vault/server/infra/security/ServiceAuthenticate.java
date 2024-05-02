@@ -1,4 +1,4 @@
-package tech.vault.server.core.security;
+package tech.vault.server.infra.security;
 
 
 import org.springframework.security.core.Authentication;

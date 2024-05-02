@@ -1,11 +1,11 @@
-package tech.vault.server.database.entity.values;
+package tech.vault.server.domain.entity.values;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech.vault.server.database.entity.User;
+import tech.vault.server.domain.entity.User;
 
 import java.util.UUID;
 

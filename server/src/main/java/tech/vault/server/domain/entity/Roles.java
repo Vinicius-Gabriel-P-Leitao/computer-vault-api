@@ -1,4 +1,4 @@
-package tech.vault.server.database.entity;
+package tech.vault.server.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
