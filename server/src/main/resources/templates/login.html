@@ -1,22 +1,44 @@
 <!-- login.html -->
-
 <!DOCTYPE html>
 <html lang="pt-br" >
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h1>Login</h1>
-<form th:action="@{/login}" method="post">
-    <label>Username:</label>
-    <input type="text" name="username" required autofocus><br><br>
-    <label>Password:</label>
-    <input type="password" name="password" required><br><br>
-    <input type="submit" value="Login">
-</form>
-<div th:if="${param.error}">
-    <p style="color: red;">Invalid username or password.</p>
-</div>
+<body class="bg-[url('https://tailwindadmin.netlify.app/dist/images/login-new.jpeg')] overflow-hidden bg-cover bg-no-repeat">
+    <div class="h-screen font-sans login bg-cover" >
+        <div class="container mx-auto h-full flex flex-1 justify-center items-center">
+            <div class="w-full max-w-fit">
+              <div class="leading-loose">
+                <form class="max-w-sm m-4 p-10 bg-white bg-opacity-25 rounded shadow-xl" th:action="@{/login}" method="post">
+
+                    <p class="text-neutral-600 font-medium text-center text-lg font-bold">LOGIN</p>
+
+                      <div class="">
+                        <label class="block text-sm text-neutral-600" for="username">Usuário</label>
+                        <input class="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white" type="text" id="username"  placeholder="Nome de usuário" aria-label="username" name="username" required autofocus>
+                      </div>
+
+                      <div class="mt-2">
+                        <label class="block text-sm text-neutral-600">Senha</label>
+                         <input class="w-full px-5 py-1 text-gray-700 bg-gray-300 rounded focus:outline-none focus:bg-white"
+                          type="password" id="password" placeholder="Digite a sua senha" arial-label="password" required name="password">
+                      </div>
+        
+                      <div class="mt-4 items-center flex justify-between">
+                        <button class="px-4 py-1 text-white font-light tracking-wider bg-gray-900 hover:bg-gray-800 rounded"
+                          type="submit" value="Login">Entrar</button>
+                      </div>
+                </form>
+
+                <div th:if="${param.error}" class="bg-white bg-opacity-25 m-auto w-fit rounded">
+                    <p class="text-red-600 text-xl p-2">Usuário ou senha errado</p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
 </body>
 </html>
