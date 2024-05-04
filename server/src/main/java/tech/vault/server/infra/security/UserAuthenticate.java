@@ -1,4 +1,4 @@
-package tech.vault.server.infra.config;
+package tech.vault.server.infra.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

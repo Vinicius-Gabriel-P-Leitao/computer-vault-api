@@ -1,0 +1,22 @@
+<!-- login.html -->
+
+<!DOCTYPE html>
+<html lang="pt-br" >
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<h1>Login</h1>
+<form th:action="@{/login}" method="post">
+    <label>Username:</label>
+    <input type="text" name="username" required autofocus><br><br>
+    <label>Password:</label>
+    <input type="password" name="password" required><br><br>
+    <input type="submit" value="Login">
+</form>
+<div th:if="${param.error}">
+    <p style="color: red;">Invalid username or password.</p>
+</div>
+</body>
+</html>

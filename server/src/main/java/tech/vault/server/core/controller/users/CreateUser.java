@@ -1,4 +1,4 @@
-package tech.vault.server.core.controller;
+package tech.vault.server.core.controller.users;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
