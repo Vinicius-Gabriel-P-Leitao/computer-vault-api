@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "jwt.public.key",
+    "type": "java.lang.String",
+    "description": "Chave publica para JWT'"
+  },
+  {
+    "name": "jwt.private.key",
+    "type": "java.lang.String",
+    "description": "Chave privada para assinatura do JWT'"
+  },
+  {
+    "name": "password.adm",
+    "type": "java.lang.String",
+    "description": "Senha para o ADM do sistema"
+  },
+  {
+    "name": "user.adm",
+    "type": "java.lang.String",
+    "description": "Usuário do ADM do sistema"
+  }
+]}
