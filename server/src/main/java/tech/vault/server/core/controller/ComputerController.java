@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("v1/computer")
+@RequestMapping("/v1/computer")
 public class ComputerController {
     @Autowired
     private ComputerService service;

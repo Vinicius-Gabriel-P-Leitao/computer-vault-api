@@ -17,14 +17,7 @@ Este projeto utiliza imagens Docker e Docker Compose para executar um aplicativo
 
 ### Passo a Passo
 
-1. **Crie as chaves privadas e públicas:**
-
-```bash
-openssl genrsa > app.key
-openssl rsa -in app.key -pubout -out app.pub
-```
-
-2. **Configure o arquivo `.env`:**
+1**Configure o arquivo `.env`:**
 
 ```
 POSTGRES_DB=banco
@@ -35,7 +28,7 @@ PGADMIN_DEFAULT_PASSWORD=password
 POSTGRES_DB_URL=jdbc:postgresql://postgres:5432/banco
 ```
 
-3. **Execute o aplicativo:**
+2**Execute o aplicativo:**
 
 **A. Com Docker Compose:**
 
