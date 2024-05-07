@@ -17,11 +17,6 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-		<!--Tem que adicionar essa dependência para poder usar um HTML como pagina de login personalizada-->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
 		<!--Persistência de dados JPA-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
