@@ -16,7 +16,7 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-public class JwtService {
+public class JwtUtil {
     private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String extractUserName(String token) {
@@ -24,7 +24,7 @@ public class JwtService {
     }
 
     // *
-    // Note: Extrai as claims do token
+    // Note: Método de ordem superior que extrai as claims do token
     // *
 
     public <T> T extractClaim(
@@ -70,6 +70,7 @@ public class JwtService {
     // *
     // NOTE: Validações feitas
     // INFO: Se o token está expirado
+    // TODO: Criar tratamento de erros e validação
     // *
 
     public boolean isValidToken(String token, UserDetails userDetails) {

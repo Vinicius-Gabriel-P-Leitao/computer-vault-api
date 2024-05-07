@@ -10,14 +10,14 @@ import tech.vault.server.core.dto.authenticate.AuthenticationResponse;
 import tech.vault.server.core.dto.authenticate.RegisterRequest;
 import tech.vault.server.domain.entity.User;
 import tech.vault.server.domain.repository.UserRepository;
-import tech.vault.server.infra.security.JwtService;
+import tech.vault.server.infra.security.JwtUtil;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse userRegister(RegisterRequest request) {
@@ -27,7 +27,7 @@ public class UserService {
         user.setRole(request.role());
 
         userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtUtil.generateToken(user);
 
         return AuthenticationResponse.builder().token(jwtToken).build();
     }
@@ -41,7 +41,7 @@ public class UserService {
         );
 
         var user = userRepository.findByUserName(request.userName()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtUtil.generateToken(user);
 
         return AuthenticationResponse.builder().token(jwtToken).build();
     }

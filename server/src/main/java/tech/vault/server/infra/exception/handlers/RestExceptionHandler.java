@@ -23,7 +23,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     private ResponseEntity<OperationStatus> computerUUIInvalidArgument(MethodArgumentTypeMismatchException exception) {
         try {
-            operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "UUID inserido é invalido");
+            operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Dados inseridos são invalido");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
         } catch (Exception exceptionInternal) {
             return internalServerError();
