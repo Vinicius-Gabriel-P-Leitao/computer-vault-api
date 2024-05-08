@@ -1,7 +1,17 @@
-import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
-const Copyright = (props: any) => {
+type CopyrightFooterProps = {
+  children?: React.ReactNode;
+  link: string;
+  props?: any;
+};
+
+const CopyrightFooter = ({
+  children,
+  link,
+  ...props
+}: CopyrightFooterProps) => {
   return (
     <Typography
       variant="body2"
@@ -10,13 +20,12 @@ const Copyright = (props: any) => {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href={link}>
+        {children}
       </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 };
 
-export default Copyright;
+export default CopyrightFooter;
