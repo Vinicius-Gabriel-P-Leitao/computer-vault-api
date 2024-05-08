@@ -1,9 +1,12 @@
 package tech.vault.server.infra.exception.handlers;
 
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -23,25 +26,33 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     private ResponseEntity<OperationStatus> computerUUIInvalidArgument(MethodArgumentTypeMismatchException exception) {
         try {
-            operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Dados inseridos são invalido");
+            operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Dados inseridos são inválidos");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
         } catch (Exception exceptionInternal) {
             return internalServerError();
         }
+
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     private ResponseEntity<OperationStatus> computerDataViolationHandler(DataIntegrityViolationException exception) {
         try {
             if (exception.getMessage().contains("duplicate key value violates unique constraint")) {
-                operationStatus = new OperationStatus(HttpStatus.CONFLICT, "Valor inserido já é existente dentro do banco!");
+                operationStatus = new OperationStatus(HttpStatus.CONFLICT, "O valor inserido já existe no banco de dados!");
             } else {
-                operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Dados inseridos estão errados!");
+                operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Dados inseridos estão incorretos!");
             }
 
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
         } catch (Exception exceptionInternal) {
             return internalServerError();
         }
+    }
+
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<OperationStatus> handleMissingHeaderException(MissingRequestHeaderException exception) {
+        OperationStatus operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Faltam informações no seu header: " + exception.getHeaderName());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
     }
 }

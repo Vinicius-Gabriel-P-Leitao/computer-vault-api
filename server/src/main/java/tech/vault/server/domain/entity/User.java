@@ -1,5 +1,6 @@
 package tech.vault.server.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,9 +27,10 @@ public class User implements UserDetails {
     @Column(name = "col_user_id")
     private UUID userId;
 
-    @Column(name = "col_user_name", unique = true, nullable = false)
+    @Column(name = "col_user_name", unique = true, nullable = false, length = 30)
     private String userName;
 
+    @JsonIgnore
     @Column(name = "col_user_password", nullable = false)
     private String password;
 

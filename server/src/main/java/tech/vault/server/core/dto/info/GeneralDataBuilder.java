@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Builder
 public record GeneralDataBuilder(
-        @JsonProperty("quem-adicionou") User user,
+        @JsonProperty("quem-adicionou") String user,
         @JsonProperty("condições") String computerCondition,
         @JsonProperty("unidade-de-negocio") String businessUnit,
         @JsonProperty("departamento") String department,

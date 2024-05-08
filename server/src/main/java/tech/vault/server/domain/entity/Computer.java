@@ -23,9 +23,8 @@ public class Computer {
     @Column(name = "computer_id")
     private UUID computerId;
 
-    @ManyToOne
-    @JoinColumn(name = "col_user_id")
-    private User user;
+    @Column(name = "col_user", nullable = false, length = 30)
+    private String user;
 
     @Column(name = "col_conditions", nullable = false, length = 16) //Condição do computador
     private String computerCondition;

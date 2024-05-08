@@ -1,6 +1,7 @@
 package tech.vault.server.core.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class ComputerService {
 
     public void setComputer(ComputerRequestBuilder request) {
         computer = new Computer(request);
+
         repository.save(computer);
     }
 
