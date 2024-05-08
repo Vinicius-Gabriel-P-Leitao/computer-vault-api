@@ -3,10 +3,7 @@ package tech.vault.server.core.controller.users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.vault.server.core.dto.authenticate.AuthenticationRequest;
 import tech.vault.server.core.dto.authenticate.AuthenticationResponse;
 import tech.vault.server.core.dto.authenticate.RegisterRequest;
@@ -20,6 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
+    @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<AuthenticationResponse> registerUser(
             @RequestHeader(name = "username") String userName,
             @RequestHeader(name = "password") String password,
@@ -31,6 +29,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
+    @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<AuthenticationResponse> authenticateUser(@RequestHeader(name = "username") String userName,
                                                                    @RequestHeader(name = "password") String password) {
         AuthenticationRequest authenticationRequest = new AuthenticationRequest(userName, password);

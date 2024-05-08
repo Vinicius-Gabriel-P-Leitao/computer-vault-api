@@ -18,16 +18,19 @@ public class ComputerController {
     private ComputerService service;
 
     @GetMapping()
+    @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<List<ComputerResponseBuilder>> getAllComputers() {
         return ResponseEntity.status(HttpStatus.OK).body(service.getAllComputers());
     }
 
     @GetMapping("/{computer-id}")
+    @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<ComputerResponseBuilder> getComputerById(@PathVariable("computer-id") UUID id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getComputerById(id));
     }
 
     @PostMapping
+    @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<String> postComputer(@RequestBody ComputerRequestBuilder request) {
         service.setComputer(request);
 
@@ -35,6 +38,7 @@ public class ComputerController {
     }
 
     @PatchMapping("/{computer-id}")
+    @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<String> patchComputer(@PathVariable("computer=id") UUID id, @RequestBody ComputerRequestBuilder request) {
         service.patchComputer(id, request);
 
@@ -42,6 +46,7 @@ public class ComputerController {
     }
 
     @DeleteMapping("/{computer-id}")
+    @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<String> deleteComputer(@PathVariable("computer=id") UUID id) {
         service.deleteComputer(id);
 
