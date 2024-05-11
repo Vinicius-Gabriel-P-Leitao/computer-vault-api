@@ -1,4 +1,4 @@
-import LoginUser from "@/api/routes/user/login-user";
+import LoginUser from "@/api/user/login-user";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -7,20 +7,39 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useEffect, useState } from "react";
 import CopyrightFooter from "./copyright";
-
-type LoginUserProps = {
-  userName: string;
-  password: string;
-};
+import { Alert } from "@mui/material";
 
 const Formulary = () => {
-  // NOTE:Pega os valores do form
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
 
-    LoginUser(data.get("username") as string, data.get("password") as string);  
+  // NOTE: Evento que pega valores do forms, joga para uma função de fetch que salva no local storage e salva o valor no state
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+
+    const data = new FormData(event.currentTarget);
+    const username = data.get("username") as string;
+    const password = data.get("password") as string;
+
+    try {
+      const loginResponse = await LoginUser(username, password);
+
+      if (loginResponse.operation) {
+        // const storedToken = localStorage.getItem("token");
+        console.log("Token armazenado");
+        setSuccess(true);
+      } else {
+        setSuccess(false);
+        setError("Credenciais inválidas");
+      }
+    } catch (error) {
+      console.error("Erro ao realizar login:", error);
+      setSuccess(false);
+      setError("Erro ao realizar login");
+    }
   };
 
   return (
@@ -75,9 +94,13 @@ const Formulary = () => {
             Enviar
           </Button>
 
-          {/* //NOTE: Component */}
+          {error && <Alert severity="error">{error}</Alert>}
+          {success && (
+            <Alert severity="success">Sucesso ao realizar login</Alert>
+          )}
+
           <CopyrightFooter link="http://localhost:3000/">
-            Tela de login{" "}
+            Tela de login
           </CopyrightFooter>
         </Box>
       </Box>

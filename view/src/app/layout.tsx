@@ -10,7 +10,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Criado com next.js",
+  title: "Computadores",
   description: "Vinícius Gabriel - Criado com next.js",
 };
 
