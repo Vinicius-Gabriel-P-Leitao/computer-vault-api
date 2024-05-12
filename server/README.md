@@ -2,9 +2,7 @@
 
 Este projeto utiliza imagens Docker e Docker Compose para executar um aplicativo com as seguintes tecnologias:
 
-* **Swagger:** Documentação completa da API.
 * **JWT:** Autenticação e autorização seguras.
-* **OAuth2:** Fluxo de autenticação flexível.
 * **Postgresql:** Banco de dados relacional confiável.
 * **Lombok:** Simplifica a codificação Java.
 * **JPA:** Camada de persistência abrangente.
@@ -57,13 +55,3 @@ Execute o arquvip
 ServerApplication.java
 ```
 Após executar dessa forma, será necessário ter o docker instalado no seu ambiente, pois é necessário para subir o banco de dados e pgadmin
-
-4. **Acesse o Swagger:**
-
-O Swagger estará disponível em `http://localhost:8080/swagger-ui.html`.
-
-**Observações:**
-
-* Este guia assume que você já possui o código do seu aplicativo em um diretório local.
-* As variáveis de ambiente no arquivo `.env` podem ser personalizadas de acordo com suas necessidades.
-* Para mais informações sobre as tecnologias utilizadas, consulte a documentação oficial de cada uma.
