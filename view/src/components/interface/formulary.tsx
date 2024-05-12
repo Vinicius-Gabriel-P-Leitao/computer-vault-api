@@ -1,5 +1,6 @@
-import LoginUser from "@/api/user/login-user";
+import LoginUser from "@/api/auth/LoginUser";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Alert } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -7,13 +8,14 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CopyrightFooter from "./copyright";
-import { Alert } from "@mui/material";
+import { useRouter } from "next/navigation";
 
 const Formulary = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
+  const router = useRouter();
 
   // NOTE: Evento que pega valores do forms, joga para uma função de fetch que salva no local storage e salva o valor no state
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -31,6 +33,8 @@ const Formulary = () => {
         // const storedToken = localStorage.getItem("token");
         console.log("Token armazenado");
         setSuccess(true);
+
+        router.push("/dashboard");
       } else {
         setSuccess(false);
         setError("Credenciais inválidas");

@@ -1,7 +1,7 @@
 // Material-ui
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "../components/themes/theme";
+import theme from "../styles/theme";
 // Next.js
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
