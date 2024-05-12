@@ -2,7 +2,8 @@
 import { cookies } from "next/headers";
 
 async function ComputerCompany() {
-  const token = cookies().get("token");
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
 
   if (!token) {
     throw new Error("Token not found in cookies");
@@ -14,13 +15,19 @@ async function ComputerCompany() {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer${token}`,
+        Authorization: `Bearer ${token.value}`,
       },
     });
 
-    console.log(response);
+    if (!response.ok) {
+      return { operation: false, message: "Erro ao realizar requisição" };
+    }
+
+    const jsonResponse = await response.json();
+
+    return { status: true, result: jsonResponse };
   } catch (error) {
-    console.log(error);
+    return { operation: false, message: "Erro interno ao realizar requisição" };
   }
 }
 
