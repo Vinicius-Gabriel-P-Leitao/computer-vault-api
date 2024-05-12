@@ -6,16 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
 import tech.vault.server.core.dto.ComputerResponseBuilder;
-import tech.vault.server.core.service.ComputerService;
+import tech.vault.server.core.service.ComputerCrudService;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/computer")
-public class ComputerController {
+public class ComputerCrudController {
     @Autowired
-    private ComputerService service;
+    private ComputerCrudService service;
 
     @GetMapping()
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end

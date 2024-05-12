@@ -1,7 +1,6 @@
 package tech.vault.server.core.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor()
-public class ComputerService {
+@RequiredArgsConstructor
+public class ComputerCrudService {
     @Autowired
     private final ComputerRepository repository;
     private Computer computer;

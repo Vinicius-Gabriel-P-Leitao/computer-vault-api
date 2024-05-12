@@ -1,12 +1,12 @@
-package tech.vault.server.core.controller.users;
+package tech.vault.server.core.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.vault.server.core.dto.authenticate.AuthenticationRequest;
-import tech.vault.server.core.dto.authenticate.AuthenticationResponse;
-import tech.vault.server.core.dto.authenticate.RegisterRequest;
+import tech.vault.server.core.dto.auth.AuthenticationRequest;
+import tech.vault.server.core.dto.auth.AuthenticationResponse;
+import tech.vault.server.core.dto.auth.RegisterRequest;
 import tech.vault.server.core.service.UserService;
 import tech.vault.server.domain.entity.values.Role;
 
