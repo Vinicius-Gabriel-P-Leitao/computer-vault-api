@@ -14,7 +14,7 @@ import tech.vault.server.domain.entity.values.Role;
 @RequestMapping
 @RequiredArgsConstructor
 public class UserController {
-    private final UserService userService;
+    private final UserService service;
 
     @PostMapping("/register")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
@@ -25,7 +25,7 @@ public class UserController {
     ) {
         RegisterRequest request = new RegisterRequest(userName, password, role);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.userRegister(request));
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.userRegister(request));
     }
 
     @PostMapping("/login")
@@ -34,6 +34,6 @@ public class UserController {
                                                                    @RequestHeader(name = "password") String password) {
         AuthenticationRequest authenticationRequest = new AuthenticationRequest(userName, password);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.authenticate(authenticationRequest));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.authenticate(authenticationRequest));
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
 import tech.vault.server.core.dto.ComputerResponseBuilder;
 import tech.vault.server.core.service.ComputerCrudService;
+import tech.vault.server.core.service.implement.ComputerCrudServiceImpl;
 
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +40,7 @@ public class ComputerCrudController {
 
     @PatchMapping("/{computer-id}")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<String> patchComputer(@PathVariable("computer=id") UUID id, @RequestBody ComputerRequestBuilder request) {
+    public ResponseEntity<String> patchComputer(@PathVariable("computer-id") UUID id, @RequestBody ComputerRequestBuilder request) {
         service.patchComputer(id, request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Alteração realizada com sucesso!");

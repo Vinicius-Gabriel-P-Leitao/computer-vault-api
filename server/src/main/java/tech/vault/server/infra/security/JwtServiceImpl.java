@@ -16,17 +16,15 @@ import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
-public class JwtUtil {
+public class JwtServiceImpl implements JwtService {
     private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
+    @Override
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // *
-    // Note: Método de ordem superior que extrai as claims do token
-    // *
-
+    @Override
     public <T> T extractClaim(
             String token,
             Function<Claims, T> claimsTFunction
@@ -35,23 +33,12 @@ public class JwtUtil {
         return claimsTFunction.apply(claims);
     }
 
-    private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-    }
-
-    // *
-    // NOTE: Gera o token JWT
-    // *
-
+    @Override
     public String generateToken(UserDetails userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
+    @Override
     public String generateToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails
@@ -67,16 +54,22 @@ public class JwtUtil {
                 .compact();
     }
 
-    // *
-    // NOTE: Validações feitas
-    // INFO: Se o token está expirado
-    // TODO: Criar tratamento de erros e validação
-    // *
-
+    // NOTE: Verifica o nome e validade do token
+    @Override
     public boolean isValidToken(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
 
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+
+    // NOTE: Extrai as claims do token recebido e verifica a assinatura
+    private Claims extractAllClaims(String token) {
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 
     private boolean isTokenExpired(String token) {
