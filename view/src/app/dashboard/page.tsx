@@ -1,5 +1,5 @@
 "use client";
-import GetAllComputers from "@/api/computer/findComputer/GetAllComputers";
+import GetAllComputers from "@/api/computer/find-computer/GetAllComputers";
 import PieHashSet from "@/components/interface/PieHashSet";
 import { Alert, Box, Grid, Paper } from "@mui/material";
 import {
