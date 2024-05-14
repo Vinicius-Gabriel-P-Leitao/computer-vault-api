@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
+import tech.vault.server.core.dto.info.GeneralDataBuilder;
+import tech.vault.server.core.dto.info.HardwareBuilder;
+import tech.vault.server.core.dto.info.SoftwareBuilder;
 import tech.vault.server.domain.entity.values.*;
 
 import java.util.UUID;
