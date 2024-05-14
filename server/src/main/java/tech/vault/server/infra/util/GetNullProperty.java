@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 @UtilityClass
 public class GetNullProperty {
-    public static String[] nullProperty(Object source) {
+    public static String[] getNullProperties(Object source) {
         final BeanWrapper wrapperSource = new BeanWrapperImpl(source);
 
         return Stream.of(wrapperSource.getPropertyDescriptors()).map(FeatureDescriptor::getName)

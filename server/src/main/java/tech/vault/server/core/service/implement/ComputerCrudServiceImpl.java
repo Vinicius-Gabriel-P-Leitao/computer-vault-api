@@ -10,6 +10,7 @@ import tech.vault.server.core.dto.ComputerResponseBuilder;
 import tech.vault.server.core.service.ComputerCrudService;
 import tech.vault.server.domain.entity.Computer;
 import tech.vault.server.domain.repository.ComputerRepository;
+import tech.vault.server.infra.util.ArraysForOneArray;
 import tech.vault.server.infra.util.GetNullProperty;
 
 import java.util.List;
@@ -44,10 +45,14 @@ public class ComputerCrudServiceImpl implements ComputerCrudService {
     public void patchComputer(UUID id, ComputerRequestBuilder request) {
         computer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Computador não encontrado! " + id));
 
-        String[] nullProperties = GetNullProperty.nullProperty(request);
+        String[] nullPropertiesGeneralData = GetNullProperty.getNullProperties(request.generalData());
+        String[] nullPropertiesHardware = GetNullProperty.getNullProperties(request.hardware());
+        String[] nullPropertiesSoftware = GetNullProperty.getNullProperties(request.software());
+
+        String[] nullProperties = ArraysForOneArray.combineArrays(nullPropertiesGeneralData, nullPropertiesHardware, nullPropertiesSoftware);
 
         BeanUtils.copyProperties(request, computer, nullProperties);
-        repository.save(computer);
+        repository.saveAndFlush(computer);
     }
 
     @Override

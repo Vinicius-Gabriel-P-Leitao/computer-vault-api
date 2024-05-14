@@ -1,5 +1,6 @@
 package tech.vault.server.core.dto.info;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import tech.vault.server.domain.entity.Computer;
@@ -8,6 +9,7 @@ import tech.vault.server.domain.entity.values.TypeComputer;
 import tech.vault.server.domain.entity.values.TypeRam;
 
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record HardwareBuilder(@JsonProperty("marca-computador") String computerBrand,
                               @JsonProperty("tipo-computador") TypeComputer typeComputer,
                               @JsonProperty("nome") String nameComputer,
