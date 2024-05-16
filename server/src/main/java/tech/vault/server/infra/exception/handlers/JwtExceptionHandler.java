@@ -14,7 +14,7 @@ public class JwtExceptionHandler {
 
     @ExceptionHandler(MalformedJwtException.class)
     public ResponseEntity<OperationStatus> handleMalformedJwtException(MalformedJwtException ex, WebRequest request) {
-        operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Token JWT inválido: " + ex.getMessage());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
+        operationStatus = new OperationStatus(HttpStatus.FORBIDDEN, "Token JWT inválido: " + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(operationStatus);
     }
 }

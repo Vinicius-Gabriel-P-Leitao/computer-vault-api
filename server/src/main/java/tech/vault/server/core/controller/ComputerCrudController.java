@@ -10,7 +10,6 @@ import tech.vault.server.core.service.ComputerCrudService;
 import tech.vault.server.core.service.implement.ComputerCrudServiceImpl;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/v1/computer")
@@ -26,7 +25,7 @@ public class ComputerCrudController {
 
     @GetMapping("/{computer-id}")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<ComputerResponseBuilder> getComputerById(@PathVariable("computer-id") UUID id) {
+    public ResponseEntity<ComputerResponseBuilder> getComputerById(@PathVariable("computer-id") Integer id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.getComputerById(id));
     }
 
@@ -40,7 +39,7 @@ public class ComputerCrudController {
 
     @PatchMapping("/{computer-id}")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<String> patchComputer(@PathVariable("computer-id") UUID id, @RequestBody ComputerRequestBuilder request) {
+    public ResponseEntity<String> patchComputer(@PathVariable("computer-id") Integer id, @RequestBody ComputerRequestBuilder request) {
         service.patchComputer(id, request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Alteração realizada com sucesso!");
@@ -48,7 +47,7 @@ public class ComputerCrudController {
 
     @DeleteMapping("/{computer-id}")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<String> deleteComputer(@PathVariable("computer=id") UUID id) {
+    public ResponseEntity<String> deleteComputer(@PathVariable("computer=id") Integer id) {
         service.deleteComputer(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Computador deletado com sucesso!");

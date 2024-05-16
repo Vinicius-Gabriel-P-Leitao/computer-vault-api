@@ -7,10 +7,8 @@ import tech.vault.server.core.dto.info.HardwareBuilder;
 import tech.vault.server.core.dto.info.SoftwareBuilder;
 import tech.vault.server.domain.entity.Computer;
 
-import java.util.UUID;
-
 @Builder
-public record ComputerResponseBuilder(UUID computerId,
+public record ComputerResponseBuilder(@JsonProperty("indentificador") Integer computerId,
                                       @JsonProperty("dados-gerais") GeneralDataBuilder generalData,
                                       @JsonProperty("hardware") HardwareBuilder hardware,
                                       @JsonProperty("software") SoftwareBuilder software) {

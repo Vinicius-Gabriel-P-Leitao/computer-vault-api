@@ -14,7 +14,6 @@ import tech.vault.server.domain.entity.Computer;
 import tech.vault.server.domain.repository.ComputerRepository;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +29,7 @@ public class ComputerCrudServiceImpl implements ComputerCrudService {
     }
 
     @Override
-    public ComputerResponseBuilder getComputerById(UUID id) {
+    public ComputerResponseBuilder getComputerById(Integer id) {
         computer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Computador não encontrado! " + id));
         return new ComputerResponseBuilder(computer);
     }
@@ -47,7 +46,7 @@ public class ComputerCrudServiceImpl implements ComputerCrudService {
 
     @Override
     @Transactional
-    public void patchComputer(UUID id, ComputerRequestBuilder request) {
+    public void patchComputer(Integer id, ComputerRequestBuilder request) {
         repository.updateComputer(id,
                 request.generalData().user(),
                 request.generalData().computerCondition(),
@@ -69,11 +68,11 @@ public class ComputerCrudServiceImpl implements ComputerCrudService {
                 request.hardware().ssd(),
                 request.software().so()
         );
-        logger.info("Operação patchComputer concluída com sucesso para o ID: {}", id);
+        logger.info("Operação patch concluída com sucesso para o ID: {}", id);
     }
 
     @Override
-    public void deleteComputer(UUID id) {
+    public void deleteComputer(Integer id) {
         computer = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Computador não encontrado! " + id));
         logger.info("Id recebido: {}", id);
 

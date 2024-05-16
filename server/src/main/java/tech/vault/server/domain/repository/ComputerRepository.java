@@ -9,10 +9,9 @@ import tech.vault.server.domain.entity.Computer;
 import tech.vault.server.domain.entity.values.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface ComputerRepository extends JpaRepository<Computer, UUID> {
+public interface ComputerRepository extends JpaRepository<Computer, Integer> {
     @Query("SELECT c.locationComputer, COUNT(c) FROM Computer c GROUP BY c.locationComputer")
     List<Object[]> countComputersByLocation();
 
@@ -40,7 +39,7 @@ public interface ComputerRepository extends JpaRepository<Computer, UUID> {
             "c.nameSo = COALESCE(:nameSo, c.nameSo) " +
             "WHERE c.computerId = :computerId")
     void updateComputer(
-            UUID computerId,
+            Integer computerId,
             String user,
             String computerCondition,
             String businessUnit,

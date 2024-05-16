@@ -6,12 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
-import tech.vault.server.core.dto.info.GeneralDataBuilder;
-import tech.vault.server.core.dto.info.HardwareBuilder;
-import tech.vault.server.core.dto.info.SoftwareBuilder;
 import tech.vault.server.domain.entity.values.*;
-
-import java.util.UUID;
 
 @Entity
 @Setter
@@ -22,9 +17,9 @@ import java.util.UUID;
 public class Computer {
     // NOTE: Dados gerais
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "computer_id")
-    private UUID computerId;
+    private Integer computerId;
 
     @Column(name = "col_user", nullable = false, length = 30)
     private String user;

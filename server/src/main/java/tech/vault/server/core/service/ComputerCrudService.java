@@ -8,8 +8,8 @@ import java.util.UUID;
 
 public interface ComputerCrudService {
     public List<ComputerResponseBuilder> getAllComputers();
-    public ComputerResponseBuilder getComputerById(UUID id);
+    public ComputerResponseBuilder getComputerById(Integer id);
     public void setComputer(ComputerRequestBuilder request);
-    public void patchComputer(UUID id, ComputerRequestBuilder request);
-    public void deleteComputer(UUID id);
+    public void patchComputer(Integer id, ComputerRequestBuilder request);
+    public void deleteComputer(Integer id);
 }
