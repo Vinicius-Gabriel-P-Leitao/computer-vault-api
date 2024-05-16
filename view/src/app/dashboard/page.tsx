@@ -1,5 +1,7 @@
 "use client";
-import GetAllComputers from "@/api/computer/find-computer/GetAllComputers";
+import { useEffect, useState } from "react";
+import { GetDataComputer } from "@/api/computer/CrudComputer";
+import GetDataComputerLocation from "@/api/computer/GetLocationComputer";
 import PieHashSet from "@/components/interface/PieHashSet";
 import { Alert, Box, Grid, Paper } from "@mui/material";
 import {
@@ -9,38 +11,39 @@ import {
   LinePlot,
   MarkPlot,
 } from "@mui/x-charts";
-import React, { useEffect } from "react";
 
 export default function Dashboard() {
-  const [dataMemoryRam, setDataMemoryRam] = React.useState<Set<number>>(
-    new Set()
-  );
-  const [dataLocation, setDataLocation] = React.useState<ComputerLocation>();
-  const [error, setError] = React.useState(false);
+  const [dataMemoryRam, setDataMemoryRam] = useState<Set<number>>(new Set());
+  const [dataLocation, setDataLocation] = useState<ComputerLocation>();
+  const [error, setError] = useState<boolean>(false);
+
+  const dataDashboard = async () => {
+    try {
+      const dataComputer = await GetDataComputer(
+        "http://localhost:8080/v1/computer"
+      );
+      const dataLocation = await GetDataComputerLocation();
+
+      const memoryData = dataComputer.result.map(
+        (item: ComputerData) => item.hardware["memoria-ram"]
+      );
+
+      setDataLocation(dataLocation.result);
+      setDataMemoryRam(new Set(memoryData));
+    } catch (error: any) {
+      setError(true);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const dataComputerResponse = await GetAllComputers(
-          "http://localhost:8080/v1/computer"
-        );
-        const dataComputerLocationResponse = await GetAllComputers(
-          "http://localhost:8080/v1/computer/location"
-        );
+    dataDashboard();
 
-        const memoryValues = dataComputerResponse.result.map(
-          (item: ComputerData) => item.hardware["memoria-ram"]
-        );
-        setDataMemoryRam(new Set(memoryValues));
+    const intervalId = setInterval(() => {
+      dataDashboard();
+      console.log("Dashboard");
+    }, 10000);
 
-        // Atualize o estado de dataLocation com os dados de localização
-        setDataLocation(dataComputerLocationResponse.result);
-      } catch (error) {
-        setError(true);
-      }
-    };
-
-    fetchData();
+    return () => clearInterval(intervalId);
   }, []);
 
   const getMatriz = dataLocation?.MATRIZ ?? 0;
@@ -56,7 +59,7 @@ export default function Dashboard() {
           <Paper sx={{ width: "100%", height: 500 }} elevation={2}>
             <Grid container spacing={3}>
               <Grid item xs={6}>
-                <PieHashSet data={dataMemoryRam} />{" "}
+                <PieHashSet data={dataMemoryRam} />
               </Grid>
               <Grid item xs={6}>
                 <ChartContainer

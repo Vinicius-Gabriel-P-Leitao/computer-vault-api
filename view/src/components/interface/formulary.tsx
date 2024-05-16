@@ -1,4 +1,4 @@
-import LoginUser from "@/api/auth/LoginUser";
+import LoginUser from "@/api/auth/Login";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Alert } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -9,7 +9,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import CopyrightFooter from "./copyright";
+import CopyrightFooter from "./Copyright";
 import { useRouter } from "next/navigation";
 
 const Formulary = () => {
