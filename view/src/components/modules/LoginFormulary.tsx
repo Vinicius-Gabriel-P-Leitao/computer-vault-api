@@ -9,18 +9,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import CopyrightFooter from "./Copyright";
+import CopyrightFooter from "../interface/Copyright";
 import { useRouter } from "next/navigation";
 
-const Formulary = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(false);
+const LoginFormulary = () => {
+  const [messageFetch, setMessageFetch] = useState<string | null>(null);
+  const [statusFetch, setStatusFetch] = useState<boolean>(false);
   const router = useRouter();
 
-  // NOTE: Evento que pega valores do forms, joga para uma função de fetch que salva no local storage e salva o valor no state
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setError(null);
+    setMessageFetch(null);
 
     const data = new FormData(event.currentTarget);
     const username = data.get("username") as string;
@@ -30,19 +29,17 @@ const Formulary = () => {
       const loginResponse = await LoginUser(username, password);
 
       if (loginResponse.operation) {
-        // const storedToken = localStorage.getItem("token");
-        console.log("Token armazenado");
-        setSuccess(true);
+        setMessageFetch(loginResponse.message);
+        setStatusFetch(true);
 
         router.push("/dashboard");
       } else {
-        setSuccess(false);
-        setError("Credenciais inválidas");
+        setMessageFetch(loginResponse.message);
+        setStatusFetch(false);
       }
     } catch (error) {
-      console.error("Erro ao realizar login:", error);
-      setSuccess(false);
-      setError("Erro ao realizar login");
+      setMessageFetch("Erro ao realizar login: " + error);
+      setStatusFetch(false);
     }
   };
 
@@ -63,7 +60,6 @@ const Formulary = () => {
         <Typography component="h1" variant="h5">
           Login
         </Typography>
-        {/* //TODO: Separar para outro arquivo, ele é o formulário */}
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
           <TextField
             margin="normal"
@@ -85,10 +81,6 @@ const Formulary = () => {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Lembre de mim"
-          />
           <Button
             type="submit"
             fullWidth
@@ -97,10 +89,11 @@ const Formulary = () => {
           >
             Enviar
           </Button>
-
-          {error && <Alert severity="error">{error}</Alert>}
-          {success && (
-            <Alert severity="success">Sucesso ao realizar login</Alert>
+          
+          {statusFetch && (
+            <Alert severity={statusFetch ? "success" : "error"}>
+              {messageFetch}
+            </Alert>
           )}
 
           <CopyrightFooter link="http://localhost:3000/">
@@ -112,4 +105,4 @@ const Formulary = () => {
   );
 };
 
-export default Formulary;
+export default LoginFormulary;
