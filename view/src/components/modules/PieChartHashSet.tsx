@@ -1,10 +1,10 @@
 import { PieChart } from "@mui/x-charts";
 
-interface PieHashSetProps {
+interface PieChartHashSetProps {
   data: Set<number>; // INFO: Tem que ser usado um HashSet para que o gráfico não fique com valores repetidos
 }
 
-const PieHashSet = (props: PieHashSetProps) => {
+const PieChartHashSet = (props: PieChartHashSetProps) => {
   const { data } = props;
 
   return (
@@ -26,4 +26,4 @@ const PieHashSet = (props: PieHashSetProps) => {
   );
 };
 
-export default PieHashSet;
+export default PieChartHashSet;
