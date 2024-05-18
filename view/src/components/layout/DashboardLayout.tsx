@@ -1,3 +1,4 @@
+"use client"
 import { GetDataComputer } from "@/api/computer/CrudComputer";
 import GetDataComputerLocation from "@/api/computer/GetLocationComputer";
 import { Alert, createTheme, Grid, Paper } from "@mui/material";

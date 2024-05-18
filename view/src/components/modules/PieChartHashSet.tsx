@@ -11,8 +11,11 @@ const PieChartHashSet = (props: PieChartHashSetProps) => {
     <PieChart
       series={[
         {
-          data: Array.from(data).map((value) => ({ value })),
-          innerRadius: 30,
+          data: Array.from(data).map((value) => ({
+            value,
+            label: value.toString() + " GB",
+          })),
+          innerRadius: 50,
           outerRadius: 100,
           paddingAngle: 5,
           cornerRadius: 5,

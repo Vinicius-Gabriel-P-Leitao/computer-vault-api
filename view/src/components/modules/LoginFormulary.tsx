@@ -4,13 +4,11 @@ import { Alert } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CopyrightFooter from "../interface/Copyright";
-import { useRouter } from "next/navigation";
 
 const LoginFormulary = () => {
   const [messageFetch, setMessageFetch] = useState<string | null>(null);
@@ -24,6 +22,12 @@ const LoginFormulary = () => {
     const data = new FormData(event.currentTarget);
     const username = data.get("username") as string;
     const password = data.get("password") as string;
+
+    if (!username || !password) {
+      setMessageFetch("Todos os campos são obrigatórios.");
+      setStatusFetch(false);
+      return;
+    }
 
     try {
       const loginResponse = await LoginUser(username, password);
@@ -89,8 +93,8 @@ const LoginFormulary = () => {
           >
             Enviar
           </Button>
-          
-          {statusFetch && (
+
+          {messageFetch && (
             <Alert severity={statusFetch ? "success" : "error"}>
               {messageFetch}
             </Alert>

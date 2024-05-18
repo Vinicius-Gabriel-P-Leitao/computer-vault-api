@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import BackgroundSlider from "@/components/interface/BackGroundSlider";
 import LoginFormulary from "@/components/modules/LoginFormulary";
 import CssBaseline from "@mui/material/CssBaseline";
