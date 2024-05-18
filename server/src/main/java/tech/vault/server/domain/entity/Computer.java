@@ -1,12 +1,18 @@
 package tech.vault.server.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.lang.NonNull;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
 import tech.vault.server.domain.entity.values.*;
+import tech.vault.server.infra.validation.Ipv4Tester;
 
 @Entity
 @Setter
@@ -52,6 +58,7 @@ public class Computer {
     @Column(name = "col_name_computer", nullable = false, length = 15, unique = true) //Nome do computador
     private String nameComputer;
 
+    @NotBlank
     @Column(name = "col_ip", nullable = false, length = 15, unique = true) //Ip do computador
     private String ip;
 
@@ -61,7 +68,7 @@ public class Computer {
     @Column(name = "col_memory_ram") //Memoria ram do computador
     private Integer memoryRam;
 
-    @Column(name = "col_frequency_ram") //Frequencia da memória ram
+    @Column(name = "col_frequency_ram") //Frequência da memória ram
     private Integer frequencyRam;
 
     @Column(name = "col_type_ram", nullable = false, length = 10) //Tipo da memória ram ('DDR3', 'DDR4')

@@ -1,18 +1,20 @@
 package tech.vault.server.core.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
 import tech.vault.server.core.dto.ComputerResponseBuilder;
 import tech.vault.server.core.service.ComputerCrudService;
-import tech.vault.server.core.service.implement.ComputerCrudServiceImpl;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/computer")
+@Validated
 public class ComputerCrudController {
     @Autowired
     private ComputerCrudService service;
@@ -31,7 +33,7 @@ public class ComputerCrudController {
 
     @PostMapping
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<String> postComputer(@RequestBody ComputerRequestBuilder request) {
+    public ResponseEntity<String> postComputer(@Valid @RequestBody ComputerRequestBuilder request) {
         service.setComputer(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Computador inserido com sucesso!");
@@ -39,7 +41,7 @@ public class ComputerCrudController {
 
     @PatchMapping("/{computer-id}")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<String> patchComputer(@PathVariable("computer-id") Integer id, @RequestBody ComputerRequestBuilder request) {
+    public ResponseEntity<String> patchComputer(@PathVariable("computer-id") Integer id, @Valid @RequestBody ComputerRequestBuilder request) {
         service.patchComputer(id, request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Alteração realizada com sucesso!");
@@ -47,7 +49,7 @@ public class ComputerCrudController {
 
     @DeleteMapping("/{computer-id}")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<String> deleteComputer(@PathVariable("computer=id") Integer id) {
+    public ResponseEntity<String> deleteComputer(@PathVariable("computer-id") Integer id) {
         service.deleteComputer(id);
 
         return ResponseEntity.status(HttpStatus.OK).body("Computador deletado com sucesso!");

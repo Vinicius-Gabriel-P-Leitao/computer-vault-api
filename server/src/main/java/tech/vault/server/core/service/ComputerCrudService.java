@@ -4,7 +4,6 @@ import tech.vault.server.core.dto.ComputerRequestBuilder;
 import tech.vault.server.core.dto.ComputerResponseBuilder;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface ComputerCrudService {
     public List<ComputerResponseBuilder> getAllComputers();
