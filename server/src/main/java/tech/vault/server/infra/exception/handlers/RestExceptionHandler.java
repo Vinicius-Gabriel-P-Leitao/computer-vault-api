@@ -6,16 +6,17 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import tech.vault.server.infra.exception.ExArgumentNotValid;
 import tech.vault.server.infra.exception.message.OperationStatus;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,24 +28,6 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<OperationStatus> internalServerError() {
         operationStatus = new OperationStatus(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu um erro interno no servidor.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(operationStatus);
-    }
-
-    @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException exception,
-            HttpHeaders headers,
-            HttpStatusCode status,
-            WebRequest request) {
-
-        Map<String, String> errors = new HashMap<>();
-
-        exception.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -74,8 +57,24 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(MissingRequestHeaderException.class)
     public ResponseEntity<OperationStatus> handleMissingHeaderException(MissingRequestHeaderException exception) {
-        OperationStatus operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Faltam informações no seu header: " + exception.getHeaderName());
-
+        operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, "Faltam informações no seu header: " + exception.getHeaderName());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
+    }
+
+    @ExceptionHandler(ExArgumentNotValid.class)
+    public ResponseEntity<OperationStatus> handleArgumentNotValid(ExArgumentNotValid exception) {
+        operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
+    }
+
+    @Override
+    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException exception, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+        Map<String, Object> body = new HashMap<>();
+
+        body.put("status", status.value());
+        body.put("error", "O JSON está mal formado");
+        body.put("message", exception.getCause());
+
+        return new ResponseEntity<>(body, headers, status);
     }
 }

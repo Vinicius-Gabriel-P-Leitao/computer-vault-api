@@ -12,9 +12,9 @@ import tech.vault.server.core.service.ComputerCrudService;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/v1/computer")
-@Validated
 public class ComputerCrudController {
     @Autowired
     private ComputerCrudService service;
