@@ -16,7 +16,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import tech.vault.server.infra.exception.ExArgumentNotValid;
 import tech.vault.server.infra.exception.message.OperationStatus;
 
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,8 +71,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         Map<String, Object> body = new HashMap<>();
 
         body.put("status", status.value());
-        body.put("error", "O JSON está mal formado");
-        body.put("message", exception.getCause());
+        body.put("error", "Certifique-se de que o JSON esteja bem formatado");
+        body.put("message", exception.getMessage());
+
 
         return new ResponseEntity<>(body, headers, status);
     }

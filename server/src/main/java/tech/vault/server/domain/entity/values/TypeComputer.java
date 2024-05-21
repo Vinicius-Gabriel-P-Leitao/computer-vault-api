@@ -11,6 +11,6 @@ public enum TypeComputer {
     DESKTOP(1L),
     ALL_IN_ONE(2L),
     MICRO(3L),
-    MONTADo(4L);
+    MONTADO(4L);
     Long id;
 }
