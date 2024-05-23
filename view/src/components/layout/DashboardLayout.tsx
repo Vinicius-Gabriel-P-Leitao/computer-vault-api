@@ -35,7 +35,6 @@ export default function DashboardLayout() {
 
     const intervalId = setInterval(() => {
       dataDashboard();
-      console.log("Dashboard");
     }, 10000);
 
     return () => clearInterval(intervalId);

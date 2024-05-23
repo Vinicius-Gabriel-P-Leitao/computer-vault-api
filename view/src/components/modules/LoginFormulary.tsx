@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import CopyrightFooter from "../interface/Copyright";
+import CopyrightFooter from "../interface/copyright";
 
 const LoginFormulary = () => {
   const [messageFetch, setMessageFetch] = useState<string | null>(null);
