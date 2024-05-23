@@ -1,8 +1,9 @@
-package tech.vault.server.infra.validation;
+package tech.vault.server.infra.validation.constraint;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import tech.vault.server.infra.exception.ExArgumentNotValid;
+import tech.vault.server.infra.validation.Ipv4Tester;
 
 import java.util.regex.Pattern;
 
