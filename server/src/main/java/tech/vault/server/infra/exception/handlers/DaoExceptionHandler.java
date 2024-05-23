@@ -13,14 +13,14 @@ public class DaoExceptionHandler {
 
     // NOTE: Internal server error
     private ResponseEntity<OperationStatus> internalServerError() {
-        operationStatus = new OperationStatus(HttpStatus.INTERNAL_SERVER_ERROR, "Ocorreu um erro interno no servidor.");
+        operationStatus = new OperationStatus(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Ocorreu um erro interno no servidor.");
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(operationStatus);
     }
 
     @ExceptionHandler(ExNotFound.class)
     private ResponseEntity<OperationStatus> computerUUIdNotFound(ExNotFound exception) {
         try {
-            operationStatus = new OperationStatus(HttpStatus.NOT_FOUND, exception.getMessage());
+            operationStatus = new OperationStatus(HttpStatus.NOT_FOUND.value(), exception.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(operationStatus);
         } catch (Exception exceptionInternal) {
             return internalServerError();

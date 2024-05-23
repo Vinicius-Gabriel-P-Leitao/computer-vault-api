@@ -1,5 +1,6 @@
 package tech.vault.server.infra.components;
 
+import com.nimbusds.jose.util.StandardCharset;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tech.vault.server.infra.exception.ExJwtExpired;
 import tech.vault.server.infra.security.JwtService;
 
 import java.io.IOException;
@@ -29,17 +31,37 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-
+        //INFO: Seta o response como UTF8 e verifica o header da requisição
+        response.setCharacterEncoding(StandardCharset.UTF_8.displayName());
         final String authHeader = request.getHeader("Authorization");
 
+        //INFO: Verifica se o token está no header
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
+        //INFO: Remove o "Bearer" do jwt
         final String jwt = authHeader.substring(7);
-        final String userName = jwtService.extractUserName(jwt);
+        final String userName;
 
+        //NOTE: Tratamento de erros para um token invalido
+        try {
+            userName = jwtService.extractUserName(jwt);
+
+        } catch (ExJwtExpired exception) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write(exception.getJwtExpired());
+            return;
+
+        } catch (Exception exception) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            response.getWriter().write("O token é invalido");
+            return;
+
+        }
+
+        //NOTE: Valida o usuário e se o token foi assinado corretamente
         if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
 

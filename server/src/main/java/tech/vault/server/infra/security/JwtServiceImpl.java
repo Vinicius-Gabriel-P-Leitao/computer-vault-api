@@ -1,14 +1,17 @@
 package tech.vault.server.infra.security;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import tech.vault.server.infra.exception.ExJwtExpired;
 
 import java.security.Key;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,7 +32,14 @@ public class JwtServiceImpl implements JwtService {
             String token,
             Function<Claims, T> claimsTFunction
     ) {
-        final Claims claims = extractAllClaims(token);
+        final Claims claims;
+
+        try {
+            claims = extractAllClaims(token);
+        } catch (ExpiredJwtException exception) {
+            throw new ExJwtExpired("O seu token está expirado");
+        }
+
         return claimsTFunction.apply(claims);
     }
 
@@ -43,13 +53,17 @@ public class JwtServiceImpl implements JwtService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
-        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        Date today = calendar.getTime();
+
+        calendar.add(Calendar.YEAR, 1);
+        Date nextYear = calendar.getTime();
 
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(now.getTime()))
-                .setExpiration(new Date(now.getTime() * 20000L))
+                .setIssuedAt(today)
+                .setExpiration(nextYear)
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
