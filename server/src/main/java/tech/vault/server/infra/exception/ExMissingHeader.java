@@ -10,5 +10,4 @@ public class ExMissingHeader extends RuntimeException {
         super("Required request header '" + headerName + "' is not present");
         this.headerName = headerName;
     }
-
 }

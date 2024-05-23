@@ -15,7 +15,7 @@ public record HardwareBuilder(
         @JsonProperty("marca-computador") String computerBrand,
         @NotNull(message = "O tipo do computador não pode ser nulo") @JsonProperty("tipo-computador") TypeComputer typeComputer,
         @NotBlank(message = "O nome do computador não pode ser vazio") @JsonProperty("nome") String nameComputer,
-        @JsonProperty("ip") @NotBlank(message = "O ip não pode ser nulo") @Ipv4Tester(message = "Endereço IP inválido") String ip,
+        @NotBlank(message = "O ip não pode ser nulo") @Ipv4Tester(message = "Endereço IP inválido") @JsonProperty("ip") String ip,
         @JsonProperty("processador") String cpu,
         @JsonProperty("memoria-ram") Integer memoryRam,
         @JsonProperty("frequência-ram") Integer frequencyRam,
