@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 public class OperationStatus {
     @JsonProperty("status")
-    private HttpStatus httpStatus;
+    private int httpStatus;
 
     @JsonProperty("message")
     private String httpMessage;
