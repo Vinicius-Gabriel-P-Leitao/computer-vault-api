@@ -2,7 +2,6 @@ package tech.vault.server.infra.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import tech.vault.server.infra.validation.constraint.Ipv4Validation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
