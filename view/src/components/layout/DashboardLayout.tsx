@@ -1,16 +1,31 @@
-"use client"
+"use client";
 import { GetDataComputer } from "@/api/computer/CrudComputer";
 import GetDataComputerLocation from "@/api/computer/GetLocationComputer";
-import { Alert, createTheme, Grid, Paper } from "@mui/material";
+import { Alert, createTheme, Grid, Modal, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
 import ChartContainerLocations from "../modules/ChartContainerLocations";
 import PieChartHashSet from "../modules/PieChartHashSet";
+import ComputerQuantity from "../interface/ComputerQuantity";
+
+//NOTE: Interface para o dashboard data
+interface DashboardState {
+  computerQuantity: number;
+  dataMemoryRam: Set<number>;
+  dataLocation?: ComputerLocation;
+  error: boolean;
+}
+
+//NOTE: Define um estado inicial
+const initialState: DashboardState = {
+  computerQuantity: 0,
+  dataMemoryRam: new Set(),
+  dataLocation: undefined,
+  error: false,
+};
 
 export default function DashboardLayout() {
-  const [dataMemoryRam, setDataMemoryRam] = useState<Set<number>>(new Set());
-  const [dataLocation, setDataLocation] = useState<ComputerLocation>();
-  const [error, setError] = useState<boolean>(false);
+  const [state, setState] = useState<DashboardState>(initialState);
 
   const dataDashboard = async () => {
     try {
@@ -23,10 +38,21 @@ export default function DashboardLayout() {
         (item: ComputerData) => item.hardware["memoria-ram"]
       );
 
-      setDataLocation(dataLocation.result);
-      setDataMemoryRam(new Set(memoryData));
+      const computerQuantity = memoryData.length;
+
+      setState({
+        ...state,
+        computerQuantity,
+        dataMemoryRam: new Set(memoryData),
+        dataLocation: dataLocation.result,
+        error: false,
+      });
     } catch (error: any) {
-      setError(true);
+      //NOTE: Preserva os estados antigos e muda só o de erro
+      setState({
+        ...state,
+        error: true,
+      });
     }
   };
 
@@ -40,30 +66,47 @@ export default function DashboardLayout() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const getMatriz = dataLocation?.MATRIZ;
-  const getEstoque = dataLocation?.ESTOQUE;
-  const getPosto = dataLocation?.POSTO;
+  const getMatriz = state.dataLocation?.MATRIZ;
+  const getEstoque = state.dataLocation?.ESTOQUE;
+  const getPosto = state.dataLocation?.POSTO;
 
   return (
     <ThemeProvider theme={createTheme()}>
-      {error ? (
-        <Alert severity="error">Erro ao buscar valores</Alert>
+      {state.error ? (
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Alert variant="filled" severity="error">
+            Erro ao buscar valores
+          </Alert>
+        </Grid>
       ) : (
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Paper sx={{ width: "100%", height: 300 }} elevation={4}>
-              <PieChartHashSet data={dataMemoryRam} />
-            </Paper>
+        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item lg={3} xs={6}>
+            <ComputerQuantity
+              sx={{ height: "100%" }}
+              value={state.computerQuantity.toString()}
+            />
           </Grid>
-
-          <Grid item xs={6}>
-            <Paper sx={{ width: "100%", height: 500 }} elevation={4} >
+          <Grid
+            container
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={6}>
+              <PieChartHashSet data={state.dataMemoryRam} />
+            </Grid>
+            <Grid item>
               <ChartContainerLocations
                 matriz={getMatriz}
                 estoque={getEstoque}
                 posto={getPosto}
               />
-            </Paper>
+            </Grid>
           </Grid>
         </Grid>
       )}

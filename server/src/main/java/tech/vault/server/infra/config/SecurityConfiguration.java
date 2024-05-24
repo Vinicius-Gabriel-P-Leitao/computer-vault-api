@@ -23,11 +23,11 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         //*
-        // NOTE: Configuração de segurança do servidor
-        // INFO: Usa o método para rotas abertas (Vazio no momento)
-        // INFO: Usa seção do tipo Stateless
-        // INFO: Passa o filtro criado como provedor
-        // *
+        //NOTE: Configuração de segurança do servidor
+        //INFO: Usa o método para rotas abertas (Vazio no momento)
+        //INFO: Usa seção do tipo Stateless
+        //INFO: Passa o filtro criado como provedor
+        //*
 
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request

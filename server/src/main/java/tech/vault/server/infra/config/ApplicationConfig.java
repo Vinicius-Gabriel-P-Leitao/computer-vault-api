@@ -18,7 +18,7 @@ import tech.vault.server.domain.repository.UserRepository;
 public class ApplicationConfig {
     private final UserRepository userRepository;
 
-    // NOTE: Busca o usuário dentro do banco de dados
+    //NOTE: Busca o usuário dentro do banco de dados
     @Bean
     public UserDetailsService userDetailsService() {
         return userName -> userRepository.findByUserName(userName)

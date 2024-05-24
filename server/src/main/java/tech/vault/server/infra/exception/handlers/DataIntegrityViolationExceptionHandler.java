@@ -16,10 +16,12 @@ public class DataIntegrityViolationExceptionHandler extends InternalServerExcept
             OperationStatus operationStatus;
             if (exception.getMessage().contains("duplicate key value violates unique constraint")) {
                 operationStatus = new OperationStatus(HttpStatus.CONFLICT.value(), "O valor inserido já existe no banco de dados!");
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(operationStatus);
             } else {
                 operationStatus = new OperationStatus(HttpStatus.BAD_REQUEST.value(), "Dados inseridos estão incorretos!");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(operationStatus);
+
         } catch (Exception exceptionInternal) {
             return internalServerError();
         }

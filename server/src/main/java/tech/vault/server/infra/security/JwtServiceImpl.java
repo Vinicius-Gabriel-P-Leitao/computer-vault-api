@@ -68,7 +68,7 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
     }
 
-    // NOTE: Verifica o nome e validade do token
+    //NOTE: Verifica o nome e validade do token
     @Override
     public boolean isValidToken(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
@@ -76,7 +76,7 @@ public class JwtServiceImpl implements JwtService {
         return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
-    // NOTE: Extrai as claims do token recebido e verifica a assinatura
+    //NOTE: Extrai as claims do token recebido e verifica a assinatura
     private Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()

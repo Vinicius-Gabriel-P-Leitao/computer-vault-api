@@ -9,6 +9,8 @@ const PieChartHashSet = (props: PieChartHashSetProps) => {
 
   return (
     <PieChart
+      width={400}
+      height={300}
       series={[
         {
           data: Array.from(data).map((value) => ({

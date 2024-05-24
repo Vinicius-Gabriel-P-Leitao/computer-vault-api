@@ -8,7 +8,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import CopyrightFooter from "../interface/copyright";
+import CopyrightFooter from "../interface/Copyright";
 
 const LoginFormulary = () => {
   const [messageFetch, setMessageFetch] = useState<string | null>(null);
@@ -100,6 +100,7 @@ const LoginFormulary = () => {
             </Alert>
           )}
 
+          {/* TODO: Trocar por link ofc */}
           <CopyrightFooter link="http://localhost:3000/">
             Tela de login
           </CopyrightFooter>

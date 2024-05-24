@@ -20,7 +20,7 @@ import tech.vault.server.infra.validation.Ipv4Tester;
 @AllArgsConstructor
 @Table(name = "tb_computer")
 public class Computer {
-    // NOTE: Dados gerais
+    //NOTE: Dados gerais
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "computer_id")
@@ -50,7 +50,7 @@ public class Computer {
     @Enumerated(EnumType.STRING)//Local do computador ('matriz','posto','estoque')
     private LocationComputer locationComputer;
 
-    // NOTE: Hardware
+    //NOTE: Hardware
     @Column(name = "col_computer_brand", length = 15) //Marca do computador
     private String computerBrand;
 
@@ -96,7 +96,7 @@ public class Computer {
     @Column(name = "col_ssd") //SSD do computador
     private Integer ssd;
 
-    // NOTE: Software
+    //NOTE: Software
     @NotNull(message = "O sistema operacional não pode ser nulo")
     @Column(name = "col_so", nullable = false, length = 10) //Sistema operacional do computador
     @Enumerated(EnumType.STRING)
