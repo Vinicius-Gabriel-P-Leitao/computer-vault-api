@@ -9,12 +9,28 @@ import tech.vault.server.domain.entity.values.LocationComputer;
 
 @Builder
 public record GeneralDataBuilder(
-        @NotBlank(message = "O usuário não pode ser vazio") @JsonProperty("quem-adicionou") String user,
-        @NotNull(message = "A condição do computador não pode ser nula") @JsonProperty("condições") String computerCondition,
-        @NotNull(message = "A unidade de negocio não pode ser nula") @JsonProperty("unidade-de-negocio") String businessUnit,
-        @NotBlank(message = "O departamento não pode ser vazio") @JsonProperty("departamento") String department,
-        @JsonProperty("numero-patrimonio") String numberPatrimony,
-        @NotNull(message = "O local do computador não pode ser nulo") @JsonProperty("local") LocationComputer locationComputer) {
+        @NotBlank(message = "O usuário não pode ser vazio")
+        @JsonProperty("quem-adicionou")
+        String user,
+
+        @NotNull(message = "A condição do computador não pode ser nula")
+        @JsonProperty("condições")
+        String computerCondition,
+
+        @NotNull(message = "A unidade de negocio não pode ser nula")
+        @JsonProperty("unidade-de-negocio")
+        String businessUnit,
+
+        @NotBlank(message = "O departamento não pode ser vazio")
+        @JsonProperty("departamento")
+        String department,
+
+        @JsonProperty("numero-patrimonio")
+        String numberPatrimony,
+
+        @NotNull(message = "O local do computador não pode ser nulo")
+        @JsonProperty("local")
+        LocationComputer locationComputer) {
 
     public GeneralDataBuilder(Computer computer) {
         this(
