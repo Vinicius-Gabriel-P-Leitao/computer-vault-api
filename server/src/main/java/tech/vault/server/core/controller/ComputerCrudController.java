@@ -2,27 +2,32 @@ package tech.vault.server.core.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
 import tech.vault.server.core.dto.ComputerResponseBuilder;
-import tech.vault.server.core.service.ComputerCrudService;
-
-import java.util.List;
+import tech.vault.server.core.service.ComputerService;
 
 @Validated
 @RestController
 @RequestMapping("/v1/computer")
 public class ComputerCrudController {
     @Autowired
-    private ComputerCrudService service;
+    private ComputerService service;
 
     @GetMapping()
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<List<ComputerResponseBuilder>> getAllComputers() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.getAllComputers());
+    public ResponseEntity<Page<ComputerResponseBuilder>> getAllComputers(
+            @PageableDefault(size = 10) Pageable pageable
+    ) {
+        Page<ComputerResponseBuilder> allComputers = service.getAllComputers(pageable);
+
+        return ResponseEntity.status(HttpStatus.OK).body(allComputers);
     }
 
     @GetMapping("/{computer-id}")
