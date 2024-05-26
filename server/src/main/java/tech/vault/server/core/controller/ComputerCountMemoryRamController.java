@@ -6,19 +6,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import tech.vault.server.core.service.CountComputerLocationService;
-import tech.vault.server.domain.entity.values.LocationComputer;
+import tech.vault.server.core.service.ComputerCountMemoryRamService;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/v1/computer")
-public class CountComputerLocationController {
+public class ComputerCountMemoryRamController {
     @Autowired
-    CountComputerLocationService service;
+    ComputerCountMemoryRamService service;
 
-    @GetMapping("/location")
-    public ResponseEntity<Map<LocationComputer, Long>> countComputersByLocation() {
-        return ResponseEntity.status(HttpStatus.OK).body(service.countComputerByLocation());
+    @GetMapping("/memory-ram")
+    public ResponseEntity<Map<Integer, Long>> countComputersByLocation() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.countComputerByMemoryRam());
     }
 }

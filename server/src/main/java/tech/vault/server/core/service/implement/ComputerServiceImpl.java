@@ -7,34 +7,34 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import tech.vault.server.core.dto.ComputerRequestBuilder;
 import tech.vault.server.core.dto.ComputerResponseBuilder;
-import tech.vault.server.core.service.ComputerCrudService;
+import tech.vault.server.core.service.ComputerService;
 import tech.vault.server.domain.entity.Computer;
 import tech.vault.server.domain.entity.values.*;
 import tech.vault.server.domain.repository.ComputerRepository;
 import tech.vault.server.domain.repository.UserRepository;
 import tech.vault.server.infra.exception.ExNotFound;
 
-import java.util.List;
-
 @Service
 @Validated
 @RequiredArgsConstructor
-public class ComputerCrudServiceImpl implements ComputerCrudService {
+public class ComputerServiceImpl implements ComputerService {
     @Autowired
     private final ComputerRepository computerRepository;
     @Autowired
     private final UserRepository userRepository;
-    private final Logger logger = LoggerFactory.getLogger(ComputerCrudServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(ComputerServiceImpl.class);
     private Computer computer;
 
     @Override
-    public List<ComputerResponseBuilder> getAllComputers() {
-        return computerRepository.findAll().stream().map(ComputerResponseBuilder::new).toList();
+    public Page<ComputerResponseBuilder> getAllComputers(Pageable pageable) {
+        return computerRepository.findAll(pageable).map(ComputerResponseBuilder::new);
     }
 
     @Override

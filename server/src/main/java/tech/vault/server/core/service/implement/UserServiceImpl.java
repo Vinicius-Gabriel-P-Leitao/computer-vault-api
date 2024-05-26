@@ -5,9 +5,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import tech.vault.server.core.dto.auth.AuthenticationRequest;
-import tech.vault.server.core.dto.auth.AuthenticationResponse;
-import tech.vault.server.core.dto.auth.RegisterRequest;
+import tech.vault.server.core.dto.auth.AuthenticationRequestDTO;
+import tech.vault.server.core.dto.auth.AuthenticationResponseDTO;
+import tech.vault.server.core.dto.auth.RegisterRequestDTO;
 import tech.vault.server.core.service.UserService;
 import tech.vault.server.domain.entity.User;
 import tech.vault.server.domain.repository.UserRepository;
@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public AuthenticationResponse userRegister(RegisterRequest request) {
+    public AuthenticationResponseDTO userRegister(RegisterRequestDTO request) {
         var user = new User();
         user.setUserName(request.userName());
         user.setPassword(passwordEncoder.encode(request.password()));
@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         var jwtToken = jwtService.generateToken(user);
 
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponseDTO.builder().token(jwtToken).build();
     }
 
     @Override
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.userName(),
@@ -46,6 +46,6 @@ public class UserServiceImpl implements UserService {
         var user = userRepository.findByUserName(request.userName()).orElseThrow();
         var jwtToken = jwtService.generateToken(user);
 
-        return AuthenticationResponse.builder().token(jwtToken).build();
+        return AuthenticationResponseDTO.builder().token(jwtToken).build();
     }
 }

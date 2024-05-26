@@ -4,6 +4,6 @@ import tech.vault.server.domain.entity.values.LocationComputer;
 
 import java.util.Map;
 
-public interface CountComputerLocationService {
+public interface ComputerCountLocationService {
     public Map<LocationComputer, Long> countComputerByLocation();
 }

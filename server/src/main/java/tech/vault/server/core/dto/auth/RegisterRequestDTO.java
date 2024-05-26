@@ -5,7 +5,7 @@ import lombok.Builder;
 import tech.vault.server.domain.entity.values.Role;
 
 @Builder
-public record RegisterRequest(
+public record RegisterRequestDTO(
         @JsonProperty("user-name") String userName,
         String password,
         Role role) {

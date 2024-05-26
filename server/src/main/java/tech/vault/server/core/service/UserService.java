@@ -1,11 +1,11 @@
 package tech.vault.server.core.service;
 
-import tech.vault.server.core.dto.auth.AuthenticationRequest;
-import tech.vault.server.core.dto.auth.AuthenticationResponse;
-import tech.vault.server.core.dto.auth.RegisterRequest;
+import tech.vault.server.core.dto.auth.AuthenticationRequestDTO;
+import tech.vault.server.core.dto.auth.AuthenticationResponseDTO;
+import tech.vault.server.core.dto.auth.RegisterRequestDTO;
 
 public interface UserService {
-    public AuthenticationResponse userRegister(RegisterRequest request);
+    public AuthenticationResponseDTO userRegister(RegisterRequestDTO request);
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request);
+    public AuthenticationResponseDTO authenticate(AuthenticationRequestDTO request);
 }

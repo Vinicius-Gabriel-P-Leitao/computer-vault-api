@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.vault.server.core.dto.auth.AuthenticationRequest;
-import tech.vault.server.core.dto.auth.AuthenticationResponse;
-import tech.vault.server.core.dto.auth.RegisterRequest;
+import tech.vault.server.core.dto.auth.AuthenticationRequestDTO;
+import tech.vault.server.core.dto.auth.AuthenticationResponseDTO;
+import tech.vault.server.core.dto.auth.RegisterRequestDTO;
 import tech.vault.server.core.service.UserService;
 import tech.vault.server.domain.entity.values.Role;
 
@@ -18,22 +18,22 @@ public class UserController {
 
     @PostMapping("/register")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<AuthenticationResponse> registerUser(
+    public ResponseEntity<AuthenticationResponseDTO> registerUser(
             @RequestHeader(name = "username") String userName,
             @RequestHeader(name = "password") String password,
             @RequestHeader(name = "role") Role role
     ) {
-        RegisterRequest request = new RegisterRequest(userName, password, role);
+        RegisterRequestDTO request = new RegisterRequestDTO(userName, password, role);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(service.userRegister(request));
     }
 
     @PostMapping("/login")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
-    public ResponseEntity<AuthenticationResponse> authenticateUser(@RequestHeader(name = "username") String userName,
-                                                                   @RequestHeader(name = "password") String password) {
-        AuthenticationRequest authenticationRequest = new AuthenticationRequest(userName, password);
+    public ResponseEntity<AuthenticationResponseDTO> authenticateUser(@RequestHeader(name = "username") String userName,
+                                                                      @RequestHeader(name = "password") String password) {
+        AuthenticationRequestDTO authenticationRequestDTO = new AuthenticationRequestDTO(userName, password);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.authenticate(authenticationRequest));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(service.authenticate(authenticationRequestDTO));
     }
 }
