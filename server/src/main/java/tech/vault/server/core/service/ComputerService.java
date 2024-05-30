@@ -2,8 +2,8 @@ package tech.vault.server.core.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import tech.vault.server.core.dto.ComputerRequestBuilder;
-import tech.vault.server.core.dto.ComputerResponseBuilder;
+import tech.vault.server.core.dto.computer.ComputerRequestBuilder;
+import tech.vault.server.core.dto.computer.ComputerResponseBuilder;
 
 public interface ComputerService {
     Page<ComputerResponseBuilder> getAllComputers(Pageable pageable);
