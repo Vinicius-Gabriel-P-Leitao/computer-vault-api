@@ -75,9 +75,9 @@
         </dependency>
         <!--Para usar um arquivo .env-->
         <dependency>
-            <groupId>com.github.shyiko.dotenv</groupId>
-            <artifactId>dotenv</artifactId>
-            <version>0.1.1</version>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.0.0</version>
         </dependency>
         <!--Usar o swagger no meu projeto-->
         <dependency>
