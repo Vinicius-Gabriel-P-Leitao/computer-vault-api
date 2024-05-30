@@ -1,4 +1,4 @@
-package tech.vault.server.core.controller;
+package tech.vault.server.core.controller.computer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package tech.vault.server.core.dto;
+package tech.vault.server.core.dto.computer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

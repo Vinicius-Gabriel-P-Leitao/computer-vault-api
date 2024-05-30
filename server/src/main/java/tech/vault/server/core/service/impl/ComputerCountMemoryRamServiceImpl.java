@@ -1,4 +1,4 @@
-package tech.vault.server.core.service.implement;
+package tech.vault.server.core.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package tech.vault.server.core.controller;
+package tech.vault.server.core.controller.computer;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tech.vault.server.core.dto.ComputerRequestBuilder;
-import tech.vault.server.core.dto.ComputerResponseBuilder;
+import tech.vault.server.core.dto.computer.ComputerRequestBuilder;
+import tech.vault.server.core.dto.computer.ComputerResponseBuilder;
 import tech.vault.server.core.service.ComputerService;
 
 @Validated

@@ -1,10 +1,10 @@
-package tech.vault.server.core.dto;
+package tech.vault.server.core.dto.computer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import lombok.Builder;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
-import tech.vault.server.core.controller.ComputerCrudController;
+import tech.vault.server.core.controller.computer.ComputerCrudController;
 import tech.vault.server.core.dto.info.GeneralDataBuilder;
 import tech.vault.server.core.dto.info.HardwareBuilder;
 import tech.vault.server.core.dto.info.SoftwareBuilder;

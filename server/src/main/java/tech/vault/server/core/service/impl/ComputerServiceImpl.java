@@ -1,4 +1,4 @@
-package tech.vault.server.core.service.implement;
+package tech.vault.server.core.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,8 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import tech.vault.server.core.dto.ComputerRequestBuilder;
-import tech.vault.server.core.dto.ComputerResponseBuilder;
+import tech.vault.server.core.dto.computer.ComputerRequestBuilder;
+import tech.vault.server.core.dto.computer.ComputerResponseBuilder;
 import tech.vault.server.core.service.ComputerService;
 import tech.vault.server.domain.entity.Computer;
 import tech.vault.server.domain.entity.values.*;

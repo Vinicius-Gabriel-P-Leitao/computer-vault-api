@@ -1,4 +1,4 @@
-package tech.vault.server.core.controller;
+package tech.vault.server.core.controller.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
