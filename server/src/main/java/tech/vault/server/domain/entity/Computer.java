@@ -30,10 +30,6 @@ public class Computer {
     @Column(name = "col_user", nullable = false, length = 30)
     private String user;
 
-    @NotNull(message = "A condição do computador não pode ser nula")
-    @Column(name = "col_conditions", nullable = false, length = 16) //Condição do computador
-    private String computerCondition;
-
     @NotNull(message = "A unidade de negocio não pode ser nula")
     @Column(name = "col_business_unit", nullable = false, length = 10) //Unidade de negocio
     private String businessUnit;
@@ -55,8 +51,8 @@ public class Computer {
     private String computerBrand;
 
     @NotNull(message = "O tipo do computador não pode ser nulo")
-    @Column(name = "col_type_computer", nullable = false, length = 16) //Tipo do computador
-    @Enumerated(EnumType.STRING)
+    @Column(name = "col_type_computer", nullable = false, length = 16)
+    @Enumerated(EnumType.STRING)//Tipo do computador
     private TypeComputer typeComputer;
 
     @NotBlank(message = "O nome do computador não pode ser vazio")
@@ -104,7 +100,6 @@ public class Computer {
 
     public Computer(ComputerRequestBuilder request) {
         this.user = request.generalData().user();
-        this.computerCondition = request.generalData().computerCondition();
         this.businessUnit = request.generalData().businessUnit();
         this.department = request.generalData().department();
         this.numberPatrimony = request.generalData().numberPatrimony();

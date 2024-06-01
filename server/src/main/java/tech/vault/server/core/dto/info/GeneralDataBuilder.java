@@ -13,10 +13,6 @@ public record GeneralDataBuilder(
         @JsonProperty("quem-adicionou")
         String user,
 
-        @NotNull(message = "A condição do computador não pode ser nula")
-        @JsonProperty("condições")
-        String computerCondition,
-
         @NotNull(message = "A unidade de negocio não pode ser nula")
         @JsonProperty("unidade-de-negocio")
         String businessUnit,
@@ -35,7 +31,6 @@ public record GeneralDataBuilder(
     public GeneralDataBuilder(Computer computer) {
         this(
                 computer.getUser(),
-                computer.getComputerCondition(),
                 computer.getBusinessUnit(),
                 computer.getDepartment(),
                 computer.getNumberPatrimony(),
