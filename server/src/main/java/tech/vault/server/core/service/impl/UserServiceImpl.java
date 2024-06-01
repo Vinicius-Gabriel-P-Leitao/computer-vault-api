@@ -1,6 +1,7 @@
 package tech.vault.server.core.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,11 +12,13 @@ import tech.vault.server.core.dto.auth.RegisterRequestDTO;
 import tech.vault.server.core.service.UserService;
 import tech.vault.server.domain.entity.User;
 import tech.vault.server.domain.repository.UserRepository;
+import tech.vault.server.infra.exception.ExNotFound;
 import tech.vault.server.infra.security.JwtService;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+    @Autowired
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -47,5 +50,10 @@ public class UserServiceImpl implements UserService {
         var jwtToken = jwtService.generateToken(user);
 
         return AuthenticationResponseDTO.builder().token(jwtToken).build();
+    }
+
+    @Override
+    public User userIsPresent(String userName) {
+        return userRepository.findByUserName(userName).orElseThrow(() -> new ExNotFound("Usuário inserido não existe"));
     }
 }
