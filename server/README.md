@@ -24,6 +24,8 @@ POSTGRES_PASSWORD=password
 PGADMIN_DEFAULT_EMAIL=example@email.com
 PGADMIN_DEFAULT_PASSWORD=password
 POSTGRES_DB_URL=jdbc:postgresql://postgres:5432/banco
+NAME_ADMIN=User
+PASSWORD_ADMIN=User
 ```
 
 2**Execute o aplicativo:**
