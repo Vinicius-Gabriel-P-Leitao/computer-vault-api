@@ -67,6 +67,12 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!--H2 banco de dados em memória-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <!--Redução de verbosidade com lombok-->
         <dependency>
             <groupId>org.projectlombok</groupId>
