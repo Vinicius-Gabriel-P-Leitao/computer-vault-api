@@ -15,10 +15,10 @@ import org.springframework.validation.annotation.Validated;
 import tech.vault.server.core.dto.computer.ComputerRequestBuilder;
 import tech.vault.server.core.dto.computer.ComputerResponseBuilder;
 import tech.vault.server.core.service.ComputerService;
+import tech.vault.server.core.service.UserService;
 import tech.vault.server.domain.entity.Computer;
 import tech.vault.server.domain.entity.values.*;
 import tech.vault.server.domain.repository.ComputerRepository;
-import tech.vault.server.domain.repository.UserRepository;
 import tech.vault.server.infra.exception.ExNotFound;
 
 @Service
@@ -28,7 +28,8 @@ public class ComputerServiceImpl implements ComputerService {
     @Autowired
     private final ComputerRepository computerRepository;
     @Autowired
-    private final UserRepository userRepository;
+    private final UserService userService;
+    public static final String COMPUTER_NOT_FOUND_MESSAGE = "Computador não encontrado! ";
     private final Logger logger = LoggerFactory.getLogger(ComputerServiceImpl.class);
     private Computer computer;
 
@@ -39,15 +40,14 @@ public class ComputerServiceImpl implements ComputerService {
 
     @Override
     public ComputerResponseBuilder getComputerById(Integer id) {
-        computer = computerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Computador não encontrado! " + id));
+        computer = computerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(COMPUTER_NOT_FOUND_MESSAGE + id));
         return new ComputerResponseBuilder(computer);
     }
 
     @Override
     @Transactional
     public void setComputer(ComputerRequestBuilder request) {
-        userRepository.findByUserName(request.generalData().user())
-                .orElseThrow(() -> new ExNotFound("Usuário inserido não existe"));
+        userService.userIsPresent(request.generalData().user());
 
         computer = new Computer(request);
         logger.info("Dados recebido com sucesso: {}", request);
@@ -59,11 +59,10 @@ public class ComputerServiceImpl implements ComputerService {
     @Override
     @Transactional
     public void patchComputer(Integer id, ComputerRequestBuilder request) {
-        userRepository.findByUserName(request.generalData().user())
-                .orElseThrow(() -> new ExNotFound("Usuário inserido não existe"));
+        userService.userIsPresent(request.generalData().user());
 
         Computer currentComputer = computerRepository.findById(id)
-                .orElseThrow(() -> new ExNotFound("Computador não encontrado"));
+                .orElseThrow(() -> new ExNotFound(COMPUTER_NOT_FOUND_MESSAGE + id));
 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.valueToTree(request);
@@ -73,10 +72,6 @@ public class ComputerServiceImpl implements ComputerService {
             JsonNode userNode = generalData.get("quem-adicionou");
             if (!userNode.isNull()) {
                 currentComputer.setUser(userNode.asText());
-            }
-            JsonNode conditionNode = generalData.get("condições");
-            if (!conditionNode.isNull()) {
-                currentComputer.setComputerCondition(conditionNode.asText());
             }
             JsonNode businessUnitNode = generalData.get("unidade-de-negocio");
             if (!businessUnitNode.isNull()) {
@@ -162,7 +157,7 @@ public class ComputerServiceImpl implements ComputerService {
 
     @Override
     public void deleteComputer(Integer id) {
-        computer = computerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Computador não encontrado! " + id));
+        computer = computerRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(COMPUTER_NOT_FOUND_MESSAGE + id));
         logger.info("Id recebido: {}", id);
 
         computerRepository.delete(computer);
