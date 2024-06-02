@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
-import tech.vault.server.core.dto.computer.ComputerRequestBuilder;
+import tech.vault.server.application.dto.computer.ComputerRequestBuilder;
 import tech.vault.server.domain.entity.values.*;
 import tech.vault.server.infra.validation.Ipv4Tester;
 
