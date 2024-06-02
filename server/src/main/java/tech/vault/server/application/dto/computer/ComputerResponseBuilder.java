@@ -5,9 +5,9 @@ import jakarta.validation.Valid;
 import lombok.Builder;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import tech.vault.server.application.controller.computer.ComputerCrudController;
-import tech.vault.server.application.dto.info.GeneralDataBuilder;
-import tech.vault.server.application.dto.info.HardwareBuilder;
-import tech.vault.server.application.dto.info.SoftwareBuilder;
+import tech.vault.server.application.dto.computer.info.GeneralDataBuilder;
+import tech.vault.server.application.dto.computer.info.HardwareBuilder;
+import tech.vault.server.application.dto.computer.info.SoftwareBuilder;
 import tech.vault.server.domain.entity.Computer;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;

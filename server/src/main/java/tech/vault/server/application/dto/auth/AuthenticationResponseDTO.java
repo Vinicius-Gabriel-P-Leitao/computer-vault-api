@@ -5,6 +5,6 @@ import lombok.Builder;
 
 @Builder
 public record AuthenticationResponseDTO(
-        @JsonProperty("access_token") String token
+        @JsonProperty("access-token") String token
 ) {
 }

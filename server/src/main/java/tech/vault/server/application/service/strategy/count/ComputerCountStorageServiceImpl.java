@@ -15,6 +15,10 @@ public class ComputerCountStorageServiceImpl implements ComputerCountStorageServ
     @Autowired
     ComputerRepository repository;
 
+    /**
+     * @return Map<String, Map < Integer, Long>>
+     * Busca dentro do banco a quantidade e tipos de cada unidade de armazenamento dos computadores
+     */
     @Override
     public Map<String, Map<Integer, Long>> countComputerStorage() {
         Map<String, Map<Integer, Long>> storageCountMap = new HashMap<>();

@@ -16,6 +16,10 @@ public class ComputerCountLocationServiceImpl implements ComputerCountLocationSe
     @Autowired
     private ComputerRepository repository;
 
+    /**
+     * @return Map<LocationComputer, Long>
+     * Busca dentro do banco os locais e a quantidade de computadores em cada local
+     */
     @Override
     public Map<LocationComputer, Long> countComputerByLocation() {
         List<Object[]> result = repository.countComputersByLocation();

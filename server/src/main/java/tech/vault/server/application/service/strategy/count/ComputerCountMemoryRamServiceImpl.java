@@ -15,6 +15,10 @@ public class ComputerCountMemoryRamServiceImpl implements ComputerCountMemoryRam
     @Autowired
     ComputerRepository repository;
 
+    /**
+     * @return Map<Integer, Long>
+     * Busca dentro do banco tipos e quantidades de memórias ram presentes
+     */
     @Override
     public Map<Integer, Long> countComputerByMemoryRam() {
         List<Object[]> result = repository.countMemoryRam();

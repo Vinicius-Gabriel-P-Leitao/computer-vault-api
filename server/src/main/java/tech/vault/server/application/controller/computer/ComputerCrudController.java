@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tech.vault.server.application.dto.computer.ComputerRequestBuilder;
 import tech.vault.server.application.dto.computer.ComputerResponseBuilder;
-import tech.vault.server.application.service.ComputerCrudService;
+import tech.vault.server.application.service.strategy.ComputerCrudService;
 
 @Validated
 @RestController

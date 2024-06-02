@@ -11,6 +11,10 @@ public class ComputerRecordCountServiceImpl implements ComputerRecordCountServic
     @Autowired
     ComputerRepository repository;
 
+    /**
+     * @return Integer
+     * Busca quantos registros tem dentro da tabela de computer
+     */
     @Override
     public Integer countComputers() {
         return repository.countAllComputers();
