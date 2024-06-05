@@ -1,9 +1,10 @@
 package tech.vault.server.infra.config;
 
-import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import tech.vault.server.application.dto.auth.RegisterRequestDTO;
 import tech.vault.server.application.service.security.UserService;
@@ -13,22 +14,19 @@ import tech.vault.server.domain.repository.UserRepository;
 
 @Configuration
 public class DefaultUserAdmin {
-    private final String user;
-    private final String password;
-
-    public DefaultUserAdmin() {
-        Dotenv dotenv = Dotenv.load();
-        this.user = dotenv.get("NAME_ADMIN");
-        this.password = dotenv.get("PASSWORD_ADMIN");
-    }
+    @Autowired
+    private Environment environment;
 
     @Bean
-    public CommandLineRunner createDefaultAdmin(UserRepository userRepository, UserService userService, BCryptPasswordEncoder encoder) throws Exception {
+    public CommandLineRunner createDefaultAdmin(UserRepository userRepository, UserService userService, BCryptPasswordEncoder encoder) {
+        String userName = environment.getProperty("name.admin");
+        String password = environment.getProperty("password.admin");
+
         return args -> {
-            if (userRepository.findByUserName(user).isEmpty()) {
+            if (userRepository.findByUserName(userName).isEmpty()) {
                 User admin = new User();
 
-                admin.setUserName(user);
+                admin.setUserName(userName);
                 admin.setPassword(password);
                 admin.setRole(Role.ADMIN);
 

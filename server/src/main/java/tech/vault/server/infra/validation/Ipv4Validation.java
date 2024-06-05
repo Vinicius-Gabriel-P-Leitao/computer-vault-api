@@ -2,7 +2,6 @@ package tech.vault.server.infra.validation;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import tech.vault.server.infra.exception.ExArgumentNotValid;
 
 import java.util.regex.Pattern;
 
@@ -13,11 +12,14 @@ public class Ipv4Validation implements ConstraintValidator<Ipv4Tester, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        if (value == null)
-            throw new ExArgumentNotValid(constraintValidatorContext.getDefaultConstraintMessageTemplate());
-
-        if (!pattern.matcher(value).matches())
-            throw new ExArgumentNotValid(constraintValidatorContext.getDefaultConstraintMessageTemplate());
-        return pattern.matcher(value).matches();
+        if (value == null || !pattern.matcher(value).matches()) {
+            // Add constraint violation message
+            constraintValidatorContext.disableDefaultConstraintViolation();
+            constraintValidatorContext.buildConstraintViolationWithTemplate("Endereço IP inválido")
+                    .addConstraintViolation();
+            return false;
+        }
+        return true;
     }
 }
+

@@ -13,6 +13,10 @@ import tech.vault.server.application.dto.computer.info.HardwareBuilder;
 import tech.vault.server.application.dto.computer.info.SoftwareBuilder;
 import tech.vault.server.application.service.security.UserService;
 import tech.vault.server.application.service.strategy.ComputerCrudServiceImpl;
+import tech.vault.server.application.service.strategy.crud.ComputerCreationStrategy;
+import tech.vault.server.application.service.strategy.crud.ComputerDeletionStrategy;
+import tech.vault.server.application.service.strategy.crud.ComputerReadStrategy;
+import tech.vault.server.application.service.strategy.crud.ComputerUpdateStrategy;
 import tech.vault.server.domain.entity.User;
 import tech.vault.server.domain.entity.values.*;
 import tech.vault.server.domain.repository.ComputerRepository;
@@ -24,8 +28,22 @@ import static org.mockito.Mockito.*;
 class ComputerCrudServiceImplTest {
     @Mock
     private ComputerRepository repository;
+
     @Mock
     private UserService userService;
+
+    @Mock
+    private ComputerCreationStrategy computerCreationStrategy;
+
+    @Mock
+    private ComputerReadStrategy computerReadStrategy;
+
+    @Mock
+    private ComputerUpdateStrategy computerUpdateStrategy;
+
+    @Mock
+    private ComputerDeletionStrategy computerDeletionStrategy;
+
     @Autowired
     @InjectMocks
     private ComputerCrudServiceImpl service;
@@ -50,6 +68,6 @@ class ComputerCrudServiceImplTest {
 
         service.setComputer(computerRequestBuilder);
 
-        verify(repository, times(1)).save(any());
+        verify(computerCreationStrategy, times(1)).insertComputer(any());
     }
 }
