@@ -15,15 +15,22 @@ Este projeto utiliza imagens Docker e Docker Compose para executar um aplicativo
 
 ### Passo a Passo
 
-1**Configure o arquivo `.env`:**
+1**Configure o arquivo `.env` e `application.properties`:**
+
+- Define os dados para o banco postgres
 
 ```
 POSTGRES_DB=banco
 POSTGRES_USER=user
 POSTGRES_PASSWORD=password
-PGADMIN_DEFAULT_EMAIL=example@email.com
-PGADMIN_DEFAULT_PASSWORD=password
 POSTGRES_DB_URL=jdbc:postgresql://postgres:5432/banco
+```
+
+- Define o nome de usuário e senha do usuário padrão da aplicação, é criado assim que a aplicação é subida para produção
+
+```
+name.admin=User
+password.admin=User
 ```
 
 2**Execute o aplicativo:**
@@ -37,21 +44,25 @@ docker-compose up -d
 **B. Com Docker (sem Compose):**
 
 1. Construa as imagens:
+
 ```bash
 docker-build -t app-image .
 docker-build -t postgres-image ./postgres
 ```
 
 2. Execute os containers:
+
 ```bash
 docker run -d --name postgres -p 5432:5432 postgres-image
 docker run -d --name app -p 8080:8080 --link postgres:postgres app-image
 ```
 
 **C. Execute o script de inicialização:**
-Execute o arquvip 
+Execute o arquivo
 
 ```java
 ServerApplication.java
 ```
-Após executar dessa forma, será necessário ter o docker instalado no seu ambiente, pois é necessário para subir o banco de dados e pgadmin
+
+Após executar dessa forma, será necessário ter o docker instalado no seu ambiente, pois é necessário para subir o banco
+de dados
