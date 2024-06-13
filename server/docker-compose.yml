@@ -14,21 +14,6 @@ services:
     networks:
       - net-container
 
-  #  Pg admin para gerenciar o banco de dados
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      - "PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}"
-      - "PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}"
-    ports:
-      - "5000:80"
-    expose:
-      - "80"
-    depends_on:
-      - postgres
-    networks:
-      - net-container
-
   spring-computer-vault-api:
     # image: viniciusgggabriel/spring-computer-vault-api:1.0.0
     build:
