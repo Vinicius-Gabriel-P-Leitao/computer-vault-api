@@ -32,13 +32,17 @@ public class ComputerCountStorageServiceImpl implements ComputerCountStorageServ
         for (Object[] response : resultSdd) {
             Integer ssd = (Integer) response[0];
             Long count = (Long) response[1];
-            ssdValue.put(ssd, count);
+            if (ssd != null && count != null) {
+                ssdValue.put(ssd, count);
+            }
         }
 
         for (Object[] response : resultHd) {
             Integer hd = (Integer) response[0];
             Long count = (Long) response[1];
-            hdValue.put(hd, count);
+            if (hd != null && count != null) {
+                hdValue.put(hd, count);
+            }
         }
 
         storageCountMap.put("hd", hdValue);
