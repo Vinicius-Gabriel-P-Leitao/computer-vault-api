@@ -7,9 +7,9 @@ import type { SxProps } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 
-export interface BudgetProps {
+interface BudgetProps {
   sx?: SxProps;
-  value: string;
+  value: ComputerQuantity;
 }
 
 const ComputerQuantity = ({ sx, value }: BudgetProps): React.JSX.Element => {
@@ -24,9 +24,9 @@ const ComputerQuantity = ({ sx, value }: BudgetProps): React.JSX.Element => {
           >
             <Stack spacing={1}>
               <Typography color="text.secondary" variant="overline">
-                Quantidade em estoque
+                Total de computadores
               </Typography>
-              <Typography variant="h4">{value}</Typography>
+              <Typography variant="h4">{value.total}</Typography>
             </Stack>
             <Avatar
               sx={{
@@ -35,7 +35,10 @@ const ComputerQuantity = ({ sx, value }: BudgetProps): React.JSX.Element => {
                 width: "56px",
               }}
             >
-              <Computer fontSize="large"/>
+              <Computer
+                fontSize="large"
+                color="primary"
+              />
             </Avatar>
           </Stack>
         </Stack>

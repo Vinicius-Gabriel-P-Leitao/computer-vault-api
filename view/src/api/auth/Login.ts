@@ -27,7 +27,7 @@ async function LoginUser(
     } else {
       const jsonData = await response.json();
 
-      cookies().set("token", jsonData.access_token);
+      cookies().set("token", jsonData["access-token"]);
 
       return { operation: true, message: "Login realizado com sucesso!" };
     }

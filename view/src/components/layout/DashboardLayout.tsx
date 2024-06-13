@@ -1,26 +1,26 @@
 "use client";
-import { GetDataComputer } from "@/api/computer/CrudComputer";
-import GetDataComputerLocation from "@/api/computer/GetLocationComputer";
-import { Alert, createTheme, Grid, Modal, Paper } from "@mui/material";
+import { GetDataComputer } from "@/api/computer/RequestDataComputer";
+import { Alert, Box, createTheme, Grid, Paper } from "@mui/material";
+import { BarChart } from "@mui/x-charts";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "styled-components";
-import ChartContainerLocations from "../modules/ChartContainerLocations";
-import PieChartHashSet from "../modules/PieChartHashSet";
 import ComputerQuantity from "../interface/ComputerQuantity";
+import LineChartLocationComputer from "../modules/LineChartLocationComputer";
+import PieChartMemoryRam from "../modules/PieChartMemoryRam";
+import BarChartStorageComputer from "../modules/BarChartStorageComputer";
 
-//NOTE: Interface para o dashboard data
 interface DashboardState {
-  computerQuantity: number;
-  dataMemoryRam: Set<number>;
-  dataLocation?: ComputerLocation;
+  computerQuantity?: ComputerQuantity;
+  dataMemoryRam?: ComputerMemoryRam | undefined;
+  dataLocation?: ComputerLocation | undefined;
+  dataStorage?:
+    | { hd: Record<string, number>; ssd: Record<string, number> }
+    | undefined;
   error: boolean;
 }
 
-//NOTE: Define um estado inicial
 const initialState: DashboardState = {
-  computerQuantity: 0,
-  dataMemoryRam: new Set(),
-  dataLocation: undefined,
+  computerQuantity: { total: 0 },
   error: false,
 };
 
@@ -29,26 +29,40 @@ export default function DashboardLayout() {
 
   const dataDashboard = async () => {
     try {
-      const dataComputer = await GetDataComputer(
-        "http://localhost:8080/v1/computer"
-      );
-      const dataLocation = await GetDataComputerLocation();
-
-      const memoryData = dataComputer.result.map(
-        (item: ComputerData) => item.hardware["memoria-ram"]
+      const dataMemoryRamComputer = await GetDataComputer(
+        "http://localhost:8080/v1/computer/memory-ram"
       );
 
-      const computerQuantity = memoryData.length;
+      const dataAllComputersStock = await GetDataComputer(
+        "http://localhost:8080/v1/computer/all-stock"
+      );
+
+      const dataLocationsComputer = await GetDataComputer(
+        "http://localhost:8080/v1/computer/location"
+      );
+
+      const dataStorageComputer = await GetDataComputer(
+        "http://localhost:8080/v1/computer/computer-storage"
+      );
 
       setState({
         ...state,
-        computerQuantity,
-        dataMemoryRam: new Set(memoryData),
-        dataLocation: dataLocation.result,
+        computerQuantity: dataAllComputersStock?.result?.total
+          ? { total: dataAllComputersStock.result.total }
+          : { total: 0 },
+        dataMemoryRam: dataMemoryRamComputer?.result
+          ? dataMemoryRamComputer.result
+          : undefined,
+        dataLocation: dataLocationsComputer?.result
+          ? dataLocationsComputer.result
+          : undefined,
+        dataStorage: {
+          hd: dataStorageComputer?.result?.hd ?? {},
+          ssd: dataStorageComputer?.result?.ssd ?? {},
+        },
         error: false,
       });
     } catch (error: any) {
-      //NOTE: Preserva os estados antigos e muda só o de erro
       setState({
         ...state,
         error: true,
@@ -66,50 +80,55 @@ export default function DashboardLayout() {
     return () => clearInterval(intervalId);
   }, []);
 
-  const getMatriz = state.dataLocation?.MATRIZ;
-  const getEstoque = state.dataLocation?.ESTOQUE;
-  const getPosto = state.dataLocation?.POSTO;
-
   return (
     <ThemeProvider theme={createTheme()}>
-      {state.error ? (
-        <Grid
-          container
-          direction="row"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <Alert variant="filled" severity="error">
-            Erro ao buscar valores
-          </Alert>
-        </Grid>
-      ) : (
-        <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item lg={3} xs={6}>
-            <ComputerQuantity
-              sx={{ height: "100%" }}
-              value={state.computerQuantity.toString()}
-            />
-          </Grid>
+      <Box sx={{ padding: 2 }}>
+        {state.error ? (
           <Grid
             container
             direction="row"
             justifyContent="center"
             alignItems="center"
           >
-            <Grid item xs={6}>
-              <PieChartHashSet data={state.dataMemoryRam} />
-            </Grid>
-            <Grid item>
-              <ChartContainerLocations
-                matriz={getMatriz}
-                estoque={getEstoque}
-                posto={getPosto}
-              />
-            </Grid>
+            <Alert variant="filled" severity="error">
+              Erro ao buscar valores
+            </Alert>
           </Grid>
-        </Grid>
-      )}
+        ) : (
+          <Box>
+            <Grid container spacing={3}>
+              <Grid item lg={3} md={3} sm={6} xs={12}>
+                <ComputerQuantity
+                  sx={{ height: "40%" }}
+                  value={state.computerQuantity || { total: 0 }}
+                />
+              </Grid>
+
+              <Grid item lg={3} md={3} sm={6} xs={12}>
+                <LineChartLocationComputer
+                  matriz={state.dataLocation?.MATRIZ}
+                  estoque={state.dataLocation?.ESTOQUE}
+                  posto={state.dataLocation?.POSTO}
+                />
+              </Grid>
+
+              <Grid item lg={3} md={3} sm={6} xs={12}>
+                <BarChartStorageComputer
+                  dataStorage={
+                    state.dataStorage || {
+                      hd: {},
+                      ssd: {},
+                    }
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Grid item lg={3} md={3} sm={6} xs={12}>
+              <PieChartMemoryRam data={state.dataMemoryRam} />
+            </Grid>
+          </Box>
+        )}
+      </Box>
     </ThemeProvider>
   );
 }

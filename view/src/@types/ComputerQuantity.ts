@@ -1,0 +1,3 @@
+interface ComputerQuantity {
+    total: number;
+}
