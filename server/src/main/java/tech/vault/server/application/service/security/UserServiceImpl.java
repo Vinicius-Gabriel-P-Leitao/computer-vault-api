@@ -1,6 +1,7 @@
 package tech.vault.server.application.service.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
      * @return AuthenticationResponseDTO Retorna um token para o usuário novo
      */
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     public AuthenticationResponseDTO userRegister(RegisterRequestDTO request) {
         var user = new User();
         user.setUserName(request.userName());

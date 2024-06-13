@@ -3,6 +3,7 @@ package tech.vault.server.application.controller.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import tech.vault.server.application.dto.auth.AuthenticationRequestDTO;
 import tech.vault.server.application.dto.auth.AuthenticationResponseDTO;
@@ -17,6 +18,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/register")
+    @PreAuthorize("hasRole('ADMIN')")
     @CrossOrigin(origins = "*") //TODO: Trocar por ip do front-end
     public ResponseEntity<AuthenticationResponseDTO> registerUser(
             @RequestHeader(name = "username") String userName,
