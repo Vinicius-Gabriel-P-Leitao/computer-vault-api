@@ -1,11 +1,18 @@
 import { PieChart } from "@mui/x-charts";
 
 interface PieChartHashSetProps {
-  data: Set<number>; // INFO: Tem que ser usado um HashSet para que o gráfico não fique com valores repetidos
+  data: ComputerMemoryRam | undefined; // INFO: Tem que ser usado um HashSet para que o gráfico não fique com valores repetidos
 }
 
-const PieChartHashSet = (props: PieChartHashSetProps) => {
+const PieChartMemoryRam = (props: PieChartHashSetProps) => {
   const { data } = props;
+
+  const chartData = data
+    ? Object.entries(data).map(([key, value]) => ({
+        label: `${key} GB`,
+        value: value,
+      }))
+    : [];
 
   return (
     <PieChart
@@ -13,10 +20,7 @@ const PieChartHashSet = (props: PieChartHashSetProps) => {
       height={300}
       series={[
         {
-          data: Array.from(data).map((value) => ({
-            value,
-            label: value.toString() + " GB",
-          })),
+          data: chartData,
           innerRadius: 50,
           outerRadius: 100,
           paddingAngle: 5,
@@ -31,4 +35,4 @@ const PieChartHashSet = (props: PieChartHashSetProps) => {
   );
 };
 
-export default PieChartHashSet;
+export default PieChartMemoryRam;
