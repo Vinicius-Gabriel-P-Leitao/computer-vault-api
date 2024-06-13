@@ -1,7 +1,7 @@
 import {
   BarPlot,
-  ChartContainer,
   ChartsXAxis,
+  LineChart,
   LinePlot,
   MarkPlot,
 } from "@mui/x-charts";
@@ -12,19 +12,18 @@ interface ChartContainerLocationsProps {
   posto?: number;
 }
 
-const ChartContainerLocations = (props: ChartContainerLocationsProps) => {
+const LineChartLocationComputer = (props: ChartContainerLocationsProps) => {
   const { matriz = 0 } = props;
   const { estoque = 0 } = props;
   const { posto = 0 } = props;
 
   return (
-    <ChartContainer
-      width={300}
-      height={300}
+    <LineChart
       series={[
         {
-          type: "bar",
           data: [matriz, estoque, posto],
+          label: "Quantidade por local",
+          area: true,
         },
       ]}
       xAxis={[
@@ -34,13 +33,12 @@ const ChartContainerLocations = (props: ChartContainerLocationsProps) => {
           id: "x-axis-id",
         },
       ]}
+      width={300}
+      height={300}
     >
-      <BarPlot />
-      <LinePlot />
-      <MarkPlot />
       <ChartsXAxis position="bottom" axisId="x-axis-id" />
-    </ChartContainer>
+    </LineChart>
   );
 };
 
-export default ChartContainerLocations;
+export default LineChartLocationComputer;
