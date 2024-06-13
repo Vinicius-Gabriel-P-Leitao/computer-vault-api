@@ -12,6 +12,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import tech.vault.server.infra.filter.JwtAuthenticationFilter;
 
+/**
+ * Configuração de segurança para a aplicação utilizando Spring Security.
+ *
+ * <p>Esta classe configura regras de autorização e autenticação para diferentes endpoints da aplicação.
+ * Utiliza {@link EnableWebSecurity} para habilitar a segurança web e define um filtro JWT para autenticação.</p>
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -19,22 +25,24 @@ public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
+    /**
+     * Configura o filtro de segurança HTTP para manipular as requisições da aplicação.
+     *
+     * @param httpSecurity O objeto {@link HttpSecurity} usado para configurar as regras de segurança.
+     * @return Um {@link SecurityFilterChain} configurado com as regras de segurança especificadas.
+     * @throws Exception Se ocorrer um erro durante a configuração de segurança.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        //*
-        //NOTE: Configuração de segurança do servidor
-        //INFO: Usa o método para rotas abertas (Vazio no momento)
-        //INFO: Usa seção do tipo Stateless
-        //INFO: Passa o filtro criado como provedor
-        //*
-
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/register").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable);
 
         return httpSecurity.build();

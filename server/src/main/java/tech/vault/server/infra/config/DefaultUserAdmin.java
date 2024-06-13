@@ -12,11 +12,26 @@ import tech.vault.server.domain.entity.User;
 import tech.vault.server.domain.entity.values.Role;
 import tech.vault.server.domain.repository.UserRepository;
 
+/**
+ * Configuração para criar um usuário administrador padrão durante a inicialização da aplicação.
+ *
+ * <p>Esta classe usa {@link Configuration} para configurar um usuário administrador padrão,
+ * utilizando as propriedades do ambiente para obter o nome de usuário e senha.</p>
+ */
 @Configuration
 public class DefaultUserAdmin {
     @Autowired
     private Environment environment;
 
+
+    /**
+     * Cria um {@link CommandLineRunner} para verificar e criar um usuário administrador padrão no banco de dados.
+     *
+     * @param userRepository Repositório de usuários para acessar e salvar informações de usuário.
+     * @param userService    Serviço de usuário para registrar o usuário administrador padrão.
+     * @param encoder        Codificador de senha para criptografar a senha do usuário administrador.
+     * @return Um {@link CommandLineRunner} que executa a criação do usuário administrador padrão.
+     */
     @Bean
     public CommandLineRunner createDefaultAdmin(UserRepository userRepository, UserService userService, BCryptPasswordEncoder encoder) {
         String userName = environment.getProperty("name.admin");
