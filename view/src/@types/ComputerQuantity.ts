@@ -1,3 +1,0 @@
-interface ComputerQuantity {
-    total: number;
-}
