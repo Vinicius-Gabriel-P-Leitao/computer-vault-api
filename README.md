@@ -5,10 +5,6 @@ Este projeto consiste em uma API utilizando Spring Boot para gerenciamento de es
 ## Sumário
 - [Instalação](#instalação)
 - [Configuração](#configuração)
-- [Uso](#uso)
-- [Endpoints](#endpoints)
-- [Contribuição](#contribuição)
-- [Licença](#licença)
 
 ## Instalação
 
